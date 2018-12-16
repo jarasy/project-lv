@@ -59,12 +59,12 @@ public class LvRoleServiceImpl implements LvRoleService {
         LvRole lvRole = lvRoleMapper.selectByOpenid(openid);
         LvProfession lvProfession = lvProfessionMapper.selectByPrimaryKey(lvRole.getProfession());
         List<Map<String, String>> zbs = lvBackpakeMapper.selectZbByType(lvRole.getId(), 2);
-        int hp=0;
-        int mp=0;
-        int gj=0;
-        int fy=0;
-        int sd=0;
-        int hx=0;
+        int hp=100;
+        int mp=100;
+        int gj=10;
+        int fy=5;
+        int sd=5;
+        int hx=5;
         for (Map<String, String> zb:zbs) {
             String parameter = zb.get("parameter");
             String[] split = parameter.split("_");
@@ -85,6 +85,7 @@ public class LvRoleServiceImpl implements LvRoleService {
         property.setFy((int)(lvProfession.getFy()*fy));
         property.setSd((int)(lvProfession.getSd()*sd));
         property.setHx((int)(lvProfession.getHx()*hx));
+        property.setHs(lvRole.getHs());
 
         property.setExp(lvRole.getExp());
         property.setGender(gender==1?"男修":"女修");

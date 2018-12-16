@@ -98,6 +98,7 @@ public class UserController extends BaseController {
         DataResult result = DataResult.init();
         try{
             lvRoleService.insert(jsonObject);
+            result.setData(JSONObject.toJSONString(lvRoleService.getRoleProperty(jsonObject.getString("openid"))));
         }catch(Exception e){
             this.processError(result,e);
         }
@@ -113,7 +114,7 @@ public class UserController extends BaseController {
     public DataResult getRoleProperty(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData(lvRoleService.getRoleProperty(jsonObject.getString("openid")));
+            result.setData(JSONObject.toJSONString(lvRoleService.getRoleProperty(jsonObject.getString("openid"))));
         }catch(Exception e){
             this.processError(result,e);
         }
