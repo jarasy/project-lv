@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jarasy.lv.api.mapper.LvBackpakeMapper">
+  <resultMap id="BaseResultMap" type="com.jarasy.lv.api.domain.po.LvBackpake">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="equipped" jdbcType="INTEGER" property="equipped" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="end_time" jdbcType="BIGINT" property="endTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_id, goods_id, type, equipped, count, end_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lv_backpake
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lv_backpake
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvBackpake">
+    insert into lv_backpake (id, role_id, goods_id, 
+      type, equipped, count, 
+      end_time)
+    values (#{id,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{equipped,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, 
+      #{endTime,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvBackpake">
+    insert into lv_backpake
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="equipped != null">
+        equipped,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="equipped != null">
+        #{equipped,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jarasy.lv.api.domain.po.LvBackpake">
+    update lv_backpake
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="equipped != null">
+        equipped = #{equipped,jdbcType=INTEGER},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jarasy.lv.api.domain.po.LvBackpake">
+    update lv_backpake
+    set role_id = #{roleId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      equipped = #{equipped,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectGoodsByType"  resultType="java.util.HashMap">
+    select
+    lg.name
+    from lv_backpake lb,lv_goods lg
+    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{roleId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectZbByType"  resultType="java.util.HashMap">
+    select
+    lg.type as type,
+    lg.parameter as parameter
+    from lv_backpake lb,lv_goods lg
+    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{roleId,jdbcType=INTEGER} and lb.equipped=1
+  </select>
+
+</mapper>

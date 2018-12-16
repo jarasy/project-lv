@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/lv-api/lv-api.iml" filepath="$PROJECT_DIR$/lv-api/lv-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lv-common/lv-common.iml" filepath="$PROJECT_DIR$/lv-common/lv-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lv-eureka/lv-eureka.iml" filepath="$PROJECT_DIR$/lv-eureka/lv-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lv-springbase/lv-springbase.iml" filepath="$PROJECT_DIR$/lv-springbase/lv-springbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/project_lv.iml" filepath="$PROJECT_DIR$/.idea/project_lv.iml" />
+    </modules>
+  </component>
+</project>

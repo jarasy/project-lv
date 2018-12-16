@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="lv-api" />
+        <module name="lv-common" />
+        <module name="lv-eureka" />
+        <module name="lv-springbase" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="lv-api" target="1.8" />
+      <module name="lv-common" target="1.8" />
+      <module name="lv-eureka" target="1.8" />
+      <module name="lv-springbase" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

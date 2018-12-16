@@ -1,0 +1,10 @@
+Swagger2.class
+com\jarasy\lv\api\domain\po\LvWxUser.class
+com\jarasy\lv\api\domain\po\SealChipCancelLogs.class
+com\jarasy\lv\api\mapper\LvWxUserMapper.class
+com\jarasy\lv\api\adapter\WeixinAdapter.class
+com\jarasy\lv\api\mapper\SealChipCancelLogsMapper.class
+com\jarasy\lv\api\controller\UserController.class
+com\jarasy\lv\api\service\impl\LvWxUserServiceImpl.class
+com\jarasy\lv\api\service\LvWxUserService.class
+Application.class
