@@ -28,7 +28,7 @@ public class BackPakeController extends BaseController {
 
 
     /**
-     * 获取openid
+     * 获取物品by类型
      * @param jsonObject
      * @return
      */
@@ -37,6 +37,22 @@ public class BackPakeController extends BaseController {
         DataResult result = DataResult.init();
         try{
             result.setData( backpakeService.selectGoodsByType(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 获取物品byID
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/selectGoodsById",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult selectGoodsById(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData( backpakeService.selectGoodsById(jsonObject));
         }catch(Exception e){
             this.processError(result,e);
         }

@@ -7,6 +7,8 @@ public class LvGoods {
 
     private Integer type;
 
+    private Integer rank;
+
     private String detial;
 
     private String parameter;
@@ -39,6 +41,14 @@ public class LvGoods {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
     public String getDetial() {

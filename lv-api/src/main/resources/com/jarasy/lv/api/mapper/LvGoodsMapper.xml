@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
     <result column="detial" jdbcType="VARCHAR" property="detial" />
     <result column="parameter" jdbcType="VARCHAR" property="parameter" />
     <result column="use_function" jdbcType="VARCHAR" property="useFunction" />
@@ -12,7 +13,7 @@
     <result column="drop" jdbcType="VARCHAR" property="drop" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, detial, parameter, use_function, use_limit, drop
+    id, name, type, rank, detial, parameter, use_function, use_limit, `drop`
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,11 +27,13 @@
   </delete>
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvGoods">
     insert into lv_goods (id, name, type, 
-      detial, parameter, use_function, 
-      use_limit, drop)
+      rank, detial, parameter, 
+      use_function, use_limit, `drop`
+      )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{detial,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, #{useFunction,jdbcType=VARCHAR}, 
-      #{useLimit,jdbcType=INTEGER}, #{drop,jdbcType=VARCHAR})
+      #{rank,jdbcType=INTEGER}, #{detial,jdbcType=VARCHAR}, #{parameter,jdbcType=VARCHAR}, 
+      #{useFunction,jdbcType=VARCHAR}, #{useLimit,jdbcType=INTEGER}, #{drop,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvGoods">
     insert into lv_goods
@@ -43,6 +46,9 @@
       </if>
       <if test="type != null">
         type,
+      </if>
+      <if test="rank != null">
+        rank,
       </if>
       <if test="detial != null">
         detial,
@@ -57,7 +63,7 @@
         use_limit,
       </if>
       <if test="drop != null">
-        drop,
+        `drop`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -69,6 +75,9 @@
       </if>
       <if test="type != null">
         #{type,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
       </if>
       <if test="detial != null">
         #{detial,jdbcType=VARCHAR},
@@ -96,6 +105,9 @@
       <if test="type != null">
         type = #{type,jdbcType=INTEGER},
       </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
       <if test="detial != null">
         detial = #{detial,jdbcType=VARCHAR},
       </if>
@@ -109,7 +121,7 @@
         use_limit = #{useLimit,jdbcType=INTEGER},
       </if>
       <if test="drop != null">
-        drop = #{drop,jdbcType=VARCHAR},
+        `drop` = #{drop,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -118,11 +130,12 @@
     update lv_goods
     set name = #{name,jdbcType=VARCHAR},
       type = #{type,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
       detial = #{detial,jdbcType=VARCHAR},
       parameter = #{parameter,jdbcType=VARCHAR},
       use_function = #{useFunction,jdbcType=VARCHAR},
       use_limit = #{useLimit,jdbcType=INTEGER},
-      drop = #{drop,jdbcType=VARCHAR}
+      `drop` = #{drop,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

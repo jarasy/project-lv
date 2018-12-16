@@ -47,8 +47,8 @@
         <!-- 指定数据库表 -->
         <!-- 配置表信息 -->
 
-        <table tableName="lv_backpake"
-               domainObjectName="LvBackpake" enableCountByExample="false"
+        <table tableName="lv_goods"
+               domainObjectName="LvGoods" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                enableUpdateByExample="false">
         </table>

@@ -117,9 +117,11 @@
 
   <select id="selectGoodsByType"  resultType="java.util.HashMap">
     select
-    lg.name
+    lg.id as id,
+    lg.name as name,
+    lb.count as count
     from lv_backpake lb,lv_goods lg
-    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{roleId,jdbcType=INTEGER}
+    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{type,jdbcType=INTEGER}
   </select>
 
   <select id="selectZbByType"  resultType="java.util.HashMap">
