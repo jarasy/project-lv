@@ -51,11 +51,12 @@ public class BackpakeServiceImpl implements BackpakeService {
 
     @Override
     public Property zbGoods(JSONObject jSONObject)  throws Exception {
+        lvBackpakeMapper.outZbByTypeInRole(jSONObject.getInteger("roleId"),jSONObject.getInteger("type"),jSONObject.getInteger("wz"));
         LvBackpake lb=new LvBackpake();
         lb.setId(jSONObject.getInteger("id"));
         lb.setEquipped(1);
         lvBackpakeMapper.updateByPrimaryKeySelective(lb);
-        return lvRoleService.getRoleProperty(jSONObject.getString("openId"));
+        return null;
     }
 
     @Override
@@ -64,7 +65,7 @@ public class BackpakeServiceImpl implements BackpakeService {
         lb.setId(jSONObject.getInteger("id"));
         lb.setEquipped(0);
         lvBackpakeMapper.updateByPrimaryKeySelective(lb);
-        return lvRoleService.getRoleProperty(jSONObject.getString("openId"));
+        return null;
     }
 
     @Override

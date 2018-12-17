@@ -117,19 +117,34 @@
 
   <select id="selectGoodsByType"  resultType="java.util.HashMap">
     select
-    lg.id as id,
+    lg.id as gid,
+    lb.id as bid,
     lg.name as name,
-    lb.count as count
+    lb.count as count,
+    lb.equipped as equipped
     from lv_backpake lb,lv_goods lg
     where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{type,jdbcType=INTEGER}
   </select>
 
   <select id="selectZbByType"  resultType="java.util.HashMap">
     select
+    lg.name as name,
     lg.type as type,
     lg.parameter as parameter
     from lv_backpake lb,lv_goods lg
-    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{roleId,jdbcType=INTEGER} and lb.equipped=1
+    where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{type,jdbcType=INTEGER} and lb.equipped=1
   </select>
+
+  <update id="dqGoodsForCount" parameterType="java.lang.Integer">
+    update lv_backpake
+    set `count` =`count`-#{count,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="outZbByTypeInRole" parameterType="java.lang.Integer">
+    update lv_backpake
+    set equipped=0
+    where role_id = #{roleId,jdbcType=INTEGER} and type=#{type,jdbcType=INTEGER} and equipped=1 and exists (select t.id from lv_goods t where t.parameter like concat(#{wz}, '%') and t.id=goods_id)
+  </update>
 
 </mapper>

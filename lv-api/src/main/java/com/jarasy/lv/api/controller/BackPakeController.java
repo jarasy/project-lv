@@ -68,7 +68,7 @@ public class BackPakeController extends BaseController {
     public DataResult selectZbByType(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData( backpakeService.selectGoodsById(jsonObject));
+            result.setData( backpakeService.selectZbByType(jsonObject));
         }catch(Exception e){
             this.processError(result,e);
         }
