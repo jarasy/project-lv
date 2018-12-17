@@ -59,5 +59,84 @@ public class BackPakeController extends BaseController {
         return result;
     }
 
+    /**
+     * 获取装备物品byType
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/selectZbByType",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult selectZbByType(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData( backpakeService.selectGoodsById(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 装备物品
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/zbGoods",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult zbGoods(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData( backpakeService.zbGoods(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+    /**
+     * 解除装备物品
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/outZbGoods",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult outZbGoods(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData( backpakeService.outZbGoods(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 丢弃全部数量物品
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/dqGoodsForAll",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult dqGoodsForAll(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            backpakeService.dqGoodsForAll(jsonObject);
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 丢弃物品(数量)
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/dqGoodsForCount",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult dqGoodsForCount(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            backpakeService.dqGoodsForCount(jsonObject);
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
 
 }

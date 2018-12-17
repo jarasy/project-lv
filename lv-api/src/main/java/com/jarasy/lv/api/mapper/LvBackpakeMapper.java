@@ -24,4 +24,6 @@ public interface LvBackpakeMapper {
     List<Map<String,String>> selectGoodsByType(@Param("roleId") Integer roleId, @Param("type") Integer type);
 
     List<Map<String,String>> selectZbByType(@Param("roleId") Integer roleId, @Param("type") Integer type);
+
+    int dqGoodsForCount(@Param("id") Integer id, @Param("count") Integer count);
 }

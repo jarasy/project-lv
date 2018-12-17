@@ -119,17 +119,30 @@
     select
     lg.id as id,
     lg.name as name,
-    lb.count as count
+    lb.count as count,
+    lb.equipped as equipped
     from lv_backpake lb,lv_goods lg
     where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{type,jdbcType=INTEGER}
   </select>
 
   <select id="selectZbByType"  resultType="java.util.HashMap">
     select
+    lg.name as name,
     lg.type as type,
     lg.parameter as parameter
     from lv_backpake lb,lv_goods lg
     where lb.goods_id=lg.id and lb.role_id=#{roleId,jdbcType=INTEGER} and lb.type=#{roleId,jdbcType=INTEGER} and lb.equipped=1
   </select>
+
+  <update id="dqGoodsForCount" parameterType="java.lang.Integer">
+    update lv_backpake
+    set role_id = #{roleId,jdbcType=INTEGER},
+    goods_id = #{goodsId,jdbcType=INTEGER},
+    type = #{type,jdbcType=INTEGER},
+    equipped = #{equipped,jdbcType=INTEGER},
+    count = #{count,jdbcType=INTEGER},
+    end_time = #{endTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
 
 </mapper>
