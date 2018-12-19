@@ -6,29 +6,30 @@ import java.util.List;
  * Created by wjh on 2018/12/14 0014.
  */
 public class Property {
-    private int id;
+    private Integer id;
     private String name;
-    private int profession;
+    private Integer profession;
+    private Integer energy;
     private String gender;
-    private int rank;
-    private int level;
-    private int hy;
-    private int hs;
+    private Integer rank;
+    private Integer level;
+    private Integer hy;
+    private Integer hs;
     private Long exp;
-    private int hp;
-    private int mp;
-    private int gj;
-    private int fy;
-    private int sd;
-    private int hx;
-    private int position;
+    private Integer hp;
+    private Integer mp;
+    private Integer gj;
+    private Integer fy;
+    private Integer sd;
+    private Integer hx;
+    private Integer position;
     private List<LvSkill> skills;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,12 +41,20 @@ public class Property {
         this.name = name;
     }
 
-    public int getProfession() {
+    public Integer getProfession() {
         return profession;
     }
 
-    public void setProfession(int profession) {
+    public void setProfession(Integer profession) {
         this.profession = profession;
+    }
+
+    public Integer getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(Integer energy) {
+        this.energy = energy;
     }
 
     public String getGender() {
@@ -56,35 +65,35 @@ public class Property {
         this.gender = gender;
     }
 
-    public int getRank() {
+    public Integer getRank() {
         return rank;
     }
 
-    public void setRank(int rank) {
+    public void setRank(Integer rank) {
         this.rank = rank;
     }
 
-    public int getLevel() {
+    public Integer getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Integer level) {
         this.level = level;
     }
 
-    public int getHy() {
+    public Integer getHy() {
         return hy;
     }
 
-    public void setHy(int hy) {
+    public void setHy(Integer hy) {
         this.hy = hy;
     }
 
-    public int getHs() {
+    public Integer getHs() {
         return hs;
     }
 
-    public void setHs(int hs) {
+    public void setHs(Integer hs) {
         this.hs = hs;
     }
 
@@ -96,59 +105,59 @@ public class Property {
         this.exp = exp;
     }
 
-    public int getHp() {
+    public Integer getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(Integer hp) {
         this.hp = hp;
     }
 
-    public int getMp() {
+    public Integer getMp() {
         return mp;
     }
 
-    public void setMp(int mp) {
+    public void setMp(Integer mp) {
         this.mp = mp;
     }
 
-    public int getGj() {
+    public Integer getGj() {
         return gj;
     }
 
-    public void setGj(int gj) {
+    public void setGj(Integer gj) {
         this.gj = gj;
     }
 
-    public int getFy() {
+    public Integer getFy() {
         return fy;
     }
 
-    public void setFy(int fy) {
+    public void setFy(Integer fy) {
         this.fy = fy;
     }
 
-    public int getSd() {
+    public Integer getSd() {
         return sd;
     }
 
-    public void setSd(int sd) {
+    public void setSd(Integer sd) {
         this.sd = sd;
     }
 
-    public int getHx() {
+    public Integer getHx() {
         return hx;
     }
 
-    public void setHx(int hx) {
+    public void setHx(Integer hx) {
         this.hx = hx;
     }
 
-    public int getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 

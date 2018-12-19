@@ -1,15 +1,21 @@
-package com.jarasy.lv.api.domain.vo;
+package com.jarasy.lv.api.domain.po;
 
-/**
- * Created by wjh on 2018/12/14 0014.
- */
 public class LvSkill {
     private Integer id;
+
     private String name;
+
+    private Integer type;
+
     private Integer usehp;
+
     private Integer usemp;
+
     private Integer rank;
-    private Integer parameter;
+
+    private Integer limit;
+
+    private String parameter;
 
     public Integer getId() {
         return id;
@@ -24,7 +30,15 @@ public class LvSkill {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getUsehp() {
@@ -51,11 +65,19 @@ public class LvSkill {
         this.rank = rank;
     }
 
-    public Integer getParameter() {
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public String getParameter() {
         return parameter;
     }
 
-    public void setParameter(Integer parameter) {
-        this.parameter = parameter;
+    public void setParameter(String parameter) {
+        this.parameter = parameter == null ? null : parameter.trim();
     }
 }

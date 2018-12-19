@@ -11,6 +11,7 @@ import com.jarasy.lv.api.mapper.LvProfessionMapper;
 import com.jarasy.lv.api.mapper.LvRoleMapper;
 import com.jarasy.lv.api.service.LvRoleService;
 import com.jarasy.lv.api.service.LvWxUserService;
+import com.jarasy.lv.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,8 @@ public class LvRoleServiceImpl implements LvRoleService {
     private LvProfessionMapper lvProfessionMapper;
     @Autowired
     private LvBackpakeMapper lvBackpakeMapper;
+    @Autowired
+    private RedisService redisService;
 
     @Override
     public void insert(JSONObject jSONObject) {
@@ -86,6 +89,7 @@ public class LvRoleServiceImpl implements LvRoleService {
         property.setSd((int)(lvProfession.getSd()*sd));
         property.setHx((int)(lvProfession.getHx()*hx));
         property.setHs(lvRole.getHs());
+        property.setEnergy(lvRole.getEnergy());
 
         property.setExp(lvRole.getExp());
         property.setGender(gender==1?"男修":"女修");

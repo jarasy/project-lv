@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="openid" jdbcType="VARCHAR" property="openid" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="energy" jdbcType="INTEGER" property="energy" />
     <result column="gender" jdbcType="INTEGER" property="gender" />
     <result column="rank" jdbcType="INTEGER" property="rank" />
     <result column="level" jdbcType="INTEGER" property="level" />
@@ -18,7 +19,7 @@
     <result column="deleted" jdbcType="INTEGER" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, openid, name, gender, rank, level, profession, create_time, hy, hs, last_login_time, 
+    id, openid, name, energy, gender, rank, level, profession, create_time, hy, hs, last_login_time, 
     position, exp, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -33,15 +34,17 @@
   </delete>
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvRole">
     insert into lv_role (id, openid, name, 
-      gender, rank, level, 
-      profession, create_time, hy, 
-      hs, last_login_time, position, 
-      exp, deleted)
+      energy, gender, rank, 
+      level, profession, create_time, 
+      hy, hs, last_login_time, 
+      position, exp, deleted
+      )
     values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, 
-      #{profession,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{hy,jdbcType=INTEGER}, 
-      #{hs,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{position,jdbcType=INTEGER}, 
-      #{exp,jdbcType=BIGINT}, #{deleted,jdbcType=INTEGER})
+      #{energy,jdbcType=INTEGER}, #{gender,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, 
+      #{level,jdbcType=INTEGER}, #{profession,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{hy,jdbcType=INTEGER}, #{hs,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{position,jdbcType=INTEGER}, #{exp,jdbcType=BIGINT}, #{deleted,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvRole">
     insert into lv_role
@@ -54,6 +57,9 @@
       </if>
       <if test="name != null">
         name,
+      </if>
+      <if test="energy != null">
+        energy,
       </if>
       <if test="gender != null">
         gender,
@@ -99,6 +105,9 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="energy != null">
+        #{energy,jdbcType=INTEGER},
+      </if>
       <if test="gender != null">
         #{gender,jdbcType=INTEGER},
       </if>
@@ -143,6 +152,9 @@
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="energy != null">
+        energy = #{energy,jdbcType=INTEGER},
+      </if>
       <if test="gender != null">
         gender = #{gender,jdbcType=INTEGER},
       </if>
@@ -183,6 +195,7 @@
     update lv_role
     set openid = #{openid,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
+      energy = #{energy,jdbcType=INTEGER},
       gender = #{gender,jdbcType=INTEGER},
       rank = #{rank,jdbcType=INTEGER},
       level = #{level,jdbcType=INTEGER},
@@ -198,12 +211,12 @@
   </update>
 
 
+  <!--自定义-->
   <select id="selectByOpenid" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from lv_role
     where openid = #{openid,jdbcType=VARCHAR} and deleted=0
   </select>
-
 
 </mapper>

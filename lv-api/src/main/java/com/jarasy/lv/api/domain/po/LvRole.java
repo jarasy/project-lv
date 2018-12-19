@@ -9,6 +9,8 @@ public class LvRole {
 
     private String name;
 
+    private Integer energy;
+
     private Integer gender;
 
     private Integer rank;
@@ -53,6 +55,14 @@ public class LvRole {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getEnergy() {
+        return energy;
+    }
+
+    public void setEnergy(Integer energy) {
+        this.energy = energy;
     }
 
     public Integer getGender() {

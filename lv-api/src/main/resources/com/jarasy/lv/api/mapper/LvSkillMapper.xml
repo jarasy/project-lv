@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jarasy.lv.api.mapper.LvSkillMapper">
+  <resultMap id="BaseResultMap" type="com.jarasy.lv.api.domain.po.LvSkill">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="usehp" jdbcType="INTEGER" property="usehp" />
+    <result column="usemp" jdbcType="INTEGER" property="usemp" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="parameter" jdbcType="VARCHAR" property="parameter" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, type, usehp, usemp, rank, limit, parameter
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lv_skill
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from lv_skill
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
+    insert into lv_skill (id, name, type, 
+      usehp, usemp, rank, 
+      limit, parameter)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{usehp,jdbcType=INTEGER}, #{usemp,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, 
+      #{limit,jdbcType=INTEGER}, #{parameter,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
+    insert into lv_skill
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="usehp != null">
+        usehp,
+      </if>
+      <if test="usemp != null">
+        usemp,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="limit != null">
+        limit,
+      </if>
+      <if test="parameter != null">
+        parameter,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="usehp != null">
+        #{usehp,jdbcType=INTEGER},
+      </if>
+      <if test="usemp != null">
+        #{usemp,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="limit != null">
+        #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="parameter != null">
+        #{parameter,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
+    update lv_skill
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="usehp != null">
+        usehp = #{usehp,jdbcType=INTEGER},
+      </if>
+      <if test="usemp != null">
+        usemp = #{usemp,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="limit != null">
+        limit = #{limit,jdbcType=INTEGER},
+      </if>
+      <if test="parameter != null">
+        parameter = #{parameter,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
+    update lv_skill
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      usehp = #{usehp,jdbcType=INTEGER},
+      usemp = #{usemp,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
+      limit = #{limit,jdbcType=INTEGER},
+      parameter = #{parameter,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

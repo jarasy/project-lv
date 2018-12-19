@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @ServletComponentScan(value = "com.jarasy.lv.api")
 @MapperScan(basePackages = {"com.jarasy.lv.api.mapper"})
-@ComponentScan(value = {"com.jarasy.lv.api"})
+@ComponentScan(value = {"com.jarasy.lv.api","com.jarasy.lv.redis"})
 public class Application {
 
     @Bean

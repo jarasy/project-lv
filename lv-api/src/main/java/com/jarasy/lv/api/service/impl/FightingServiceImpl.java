@@ -28,6 +28,15 @@ public class FightingServiceImpl implements FightingService {
 
     @Override
     public Monster getMonsters(JSONObject jSONObject) throws Exception{
+        LvRole lvRole = lvRoleMapper.selectByPrimaryKey(jSONObject.getInteger("roleId"));
+        lvRole.getRank();
+        jSONObject.getInteger("map");
+        ;
+        return null;
+    }
+
+    @Override
+    public Property getPlays(JSONObject jSONObject) throws Exception{
 
         return null;
     }

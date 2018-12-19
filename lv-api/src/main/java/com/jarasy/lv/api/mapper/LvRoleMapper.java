@@ -1,9 +1,7 @@
 package com.jarasy.lv.api.mapper;
 
 import com.jarasy.lv.api.domain.po.LvRole;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface LvRoleMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -17,5 +15,6 @@ public interface LvRoleMapper {
 
     int updateByPrimaryKey(LvRole record);
 
+    /*自定义*/
     LvRole selectByOpenid(String openid);
 }

@@ -10,6 +10,6 @@ import com.jarasy.lv.api.domain.vo.Property;
  */
 public interface FightingService {
     Monster getMonsters(JSONObject jsonObject) throws Exception;
-
+    Property getPlays(JSONObject jSONObject) throws Exception;
 
 }
