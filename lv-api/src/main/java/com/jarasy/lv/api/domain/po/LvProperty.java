@@ -25,6 +25,10 @@ public class LvProperty {
 
     private Integer skillType;
 
+    private String award;
+
+    private Integer exp;
+
     private Integer position;
 
     public Integer getId() {
@@ -121,6 +125,22 @@ public class LvProperty {
 
     public void setSkillType(Integer skillType) {
         this.skillType = skillType;
+    }
+
+    public String getAward() {
+        return award;
+    }
+
+    public void setAward(String award) {
+        this.award = award == null ? null : award.trim();
+    }
+
+    public Integer getExp() {
+        return exp;
+    }
+
+    public void setExp(Integer exp) {
+        this.exp = exp;
     }
 
     public Integer getPosition() {

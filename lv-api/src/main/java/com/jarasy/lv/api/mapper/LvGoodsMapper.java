@@ -2,6 +2,10 @@ package com.jarasy.lv.api.mapper;
 
 import com.jarasy.lv.api.domain.po.LvGoods;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface LvGoodsMapper {
@@ -16,4 +20,8 @@ public interface LvGoodsMapper {
     int updateByPrimaryKeySelective(LvGoods record);
 
     int updateByPrimaryKey(LvGoods record);
+
+    /*自定义*/
+    List<Map<String,String>> selectByDrop(@Param("drop") Integer drop);
+
 }

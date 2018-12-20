@@ -1,5 +1,7 @@
 package com.jarasy.lv.api.domain.vo;
 
+import com.jarasy.lv.api.domain.po.LvSkill;
+
 import java.util.List;
 
 /**
@@ -9,8 +11,6 @@ public class Monster {
     private Integer id;
 
     private String name;
-
-    private Integer type;
 
     private Integer lv;
 
@@ -44,14 +44,6 @@ public class Monster {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
     }
 
     public Integer getLv() {

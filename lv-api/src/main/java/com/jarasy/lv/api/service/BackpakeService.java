@@ -13,10 +13,11 @@ import java.util.Map;
  */
 public interface BackpakeService {
     List<Map<String, String>> selectGoodsByType(JSONObject jSONObject) throws Exception;
-    LvGoods selectGoodsById(JSONObject jSONObject) throws Exception;
     List<Map<String, String>> selectZbByType(JSONObject jSONObject) throws Exception;
     Property zbGoods(JSONObject jSONObject) throws Exception;
     Property outZbGoods(JSONObject jSONObject) throws Exception;
     void dqGoodsForAll(JSONObject jSONObject) throws Exception;
     void dqGoodsForCount(JSONObject jSONObject) throws Exception;
+    LvGoods selectGoodsById(Integer id)  throws Exception;
+    List<Map<String,String>> selectGoodsByDrop(Integer drop)  throws Exception;
 }

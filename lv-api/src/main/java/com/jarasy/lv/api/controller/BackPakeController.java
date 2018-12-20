@@ -52,7 +52,7 @@ public class BackPakeController extends BaseController {
     public DataResult selectGoodsById(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData( backpakeService.selectGoodsById(jsonObject));
+            result.setData(backpakeService.selectGoodsById(jsonObject.getInteger("id")));
         }catch(Exception e){
             this.processError(result,e);
         }

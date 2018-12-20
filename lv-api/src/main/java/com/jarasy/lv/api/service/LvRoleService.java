@@ -1,6 +1,7 @@
 package com.jarasy.lv.api.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.jarasy.lv.api.domain.po.LvProfession;
 import com.jarasy.lv.api.domain.po.LvRole;
 import com.jarasy.lv.api.domain.po.LvWxUser;
 import com.jarasy.lv.api.domain.vo.Property;
@@ -11,7 +12,9 @@ import com.jarasy.lv.api.domain.vo.Property;
 public interface LvRoleService {
     void insert(JSONObject jsonObject);
 
-    LvRole selectByOpenid(String openid);
+    LvRole selectByOpenid(String openid) throws Exception;
 
-    Property getRoleProperty(String openid);
+    Property getRoleProperty(String openid) throws Exception;
+
+    LvProfession selectProfessionById(Integer id) throws Exception;
 }

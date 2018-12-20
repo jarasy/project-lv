@@ -14,10 +14,12 @@
     <result column="sd" jdbcType="INTEGER" property="sd" />
     <result column="hx" jdbcType="INTEGER" property="hx" />
     <result column="skill_type" jdbcType="INTEGER" property="skillType" />
+    <result column="award" jdbcType="VARCHAR" property="award" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
     <result column="position" jdbcType="INTEGER" property="position" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, lv, rank, hp, mp, gj, fy, sd, hx, skill_type, position
+    id, name, type, lv, rank, hp, mp, gj, fy, sd, hx, skill_type, award, exp, position
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -33,11 +35,13 @@
     insert into lv_property (id, name, type, 
       lv, rank, hp, mp, 
       gj, fy, sd, hx, 
-      skill_type, position)
+      skill_type, award, exp, 
+      position)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{lv,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{hp,jdbcType=INTEGER}, #{mp,jdbcType=INTEGER}, 
       #{gj,jdbcType=INTEGER}, #{fy,jdbcType=INTEGER}, #{sd,jdbcType=INTEGER}, #{hx,jdbcType=INTEGER}, 
-      #{skillType,jdbcType=INTEGER}, #{position,jdbcType=INTEGER})
+      #{skillType,jdbcType=INTEGER}, #{award,jdbcType=VARCHAR}, #{exp,jdbcType=INTEGER}, 
+      #{position,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvProperty">
     insert into lv_property
@@ -77,6 +81,12 @@
       </if>
       <if test="skillType != null">
         skill_type,
+      </if>
+      <if test="award != null">
+        award,
+      </if>
+      <if test="exp != null">
+        exp,
       </if>
       <if test="position != null">
         position,
@@ -119,6 +129,12 @@
       <if test="skillType != null">
         #{skillType,jdbcType=INTEGER},
       </if>
+      <if test="award != null">
+        #{award,jdbcType=VARCHAR},
+      </if>
+      <if test="exp != null">
+        #{exp,jdbcType=INTEGER},
+      </if>
       <if test="position != null">
         #{position,jdbcType=INTEGER},
       </if>
@@ -160,6 +176,12 @@
       <if test="skillType != null">
         skill_type = #{skillType,jdbcType=INTEGER},
       </if>
+      <if test="award != null">
+        award = #{award,jdbcType=VARCHAR},
+      </if>
+      <if test="exp != null">
+        exp = #{exp,jdbcType=INTEGER},
+      </if>
       <if test="position != null">
         position = #{position,jdbcType=INTEGER},
       </if>
@@ -179,7 +201,18 @@
       sd = #{sd,jdbcType=INTEGER},
       hx = #{hx,jdbcType=INTEGER},
       skill_type = #{skillType,jdbcType=INTEGER},
+      award = #{award,jdbcType=VARCHAR},
+      exp = #{exp,jdbcType=INTEGER},
       position = #{position,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--自定义-->
+  <select id="selectByTypeAndPosition" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from lv_property
+    where type = #{type,jdbcType=INTEGER} and position=#{position,jdbcType=INTEGER}
+  </select>
+
 </mapper>

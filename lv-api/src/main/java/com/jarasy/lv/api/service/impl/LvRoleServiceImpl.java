@@ -11,6 +11,8 @@ import com.jarasy.lv.api.mapper.LvProfessionMapper;
 import com.jarasy.lv.api.mapper.LvRoleMapper;
 import com.jarasy.lv.api.service.LvRoleService;
 import com.jarasy.lv.api.service.LvWxUserService;
+import com.jarasy.lv.common.exception.DataErrorException;
+import com.jarasy.lv.redis.HashKeyPrefix;
 import com.jarasy.lv.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by wjh on 2018/11/20.
@@ -34,33 +38,63 @@ public class LvRoleServiceImpl implements LvRoleService {
     @Autowired
     private RedisService redisService;
 
+
     @Override
     public void insert(JSONObject jSONObject) {
-        LvRole vvRole = new LvRole();
-        vvRole.setOpenid(jSONObject.getString("openid"));
-        vvRole.setName(jSONObject.getString("name"));
-        vvRole.setGender(jSONObject.getInteger("gender"));
-        vvRole.setRank(1);
-        vvRole.setLevel(1);
-        vvRole.setProfession(jSONObject.getInteger("profession"));
-        vvRole.setHs(100);
-        vvRole.setHy(0);
-        vvRole.setExp(0L);
-        vvRole.setPosition(0);
-        vvRole.setCreateTime(new Date());
-        lvRoleMapper.insertSelective(vvRole);
+        LvRole lvRole = new LvRole();
+        String openid = jSONObject.getString("openid");
+        lvRole.setOpenid(openid);
+        lvRole.setName(jSONObject.getString("name"));
+        lvRole.setGender(jSONObject.getInteger("gender"));
+        lvRole.setRank(1);
+        lvRole.setLevel(1);
+        lvRole.setProfession(jSONObject.getInteger("profession"));
+        lvRole.setHs(100);
+        lvRole.setHy(0);
+        lvRole.setExp(0L);
+        lvRole.setPosition(0);
+        lvRole.setCreateTime(new Date());
+        lvRoleMapper.insertSelective(lvRole);
+        redisService.hsetForObject(HashKeyPrefix.ROLE_INFO + openid, lvRole, TimeUnit.DAYS.toSeconds(30));
+
     }
 
     @Override
-    public LvRole selectByOpenid(String openid) {
-        LvRole lvRole = lvRoleMapper.selectByOpenid(openid);
+    public LvRole selectByOpenid(String openid) throws Exception {
+        LvRole lvRole = (LvRole) redisService.hgetAllForObject(HashKeyPrefix.ROLE_INFO + openid, LvRole.class);
+        if (null == lvRole) {
+            lvRole = lvRoleMapper.selectByOpenid(openid);
+            if (null != lvRole) {
+                // 更新缓存
+                redisService.hsetForObject(HashKeyPrefix.ROLE_INFO + openid, lvRole, TimeUnit.DAYS.toSeconds(30));
+            } else {
+                throw new DataErrorException("lvRole openid 异常 " + openid);
+            }
+            return lvRole;
+        }
         return lvRole;
     }
 
     @Override
-    public Property getRoleProperty(String openid) {
-        LvRole lvRole = lvRoleMapper.selectByOpenid(openid);
-        LvProfession lvProfession = lvProfessionMapper.selectByPrimaryKey(lvRole.getProfession());
+    public LvProfession selectProfessionById(Integer id) throws Exception {
+        LvProfession lvProfession = (LvProfession) redisService.hgetAllForObject(HashKeyPrefix.PROFESSION_INFO + id, LvProfession.class);
+        if (null == lvProfession) {
+            lvProfession = lvProfessionMapper.selectByPrimaryKey(id);
+            if (null != lvProfession) {
+                // 更新缓存
+                redisService.hsetForObject(HashKeyPrefix.PROFESSION_INFO + id, lvProfession, TimeUnit.DAYS.toSeconds(30));
+            } else {
+                throw new DataErrorException("lvRole openid 异常 " + id);
+            }
+            return lvProfession;
+        }
+        return lvProfession;
+    }
+
+    @Override
+    public Property getRoleProperty(String openid) throws Exception {
+        LvRole lvRole = selectByOpenid(openid);
+        LvProfession lvProfession = selectProfessionById(lvRole.getProfession());
         List<Map<String, String>> zbs = lvBackpakeMapper.selectZbByType(lvRole.getId(), 2);
         int hp=100;
         int mp=100;
@@ -110,7 +144,8 @@ public class LvRoleServiceImpl implements LvRoleService {
     }
 
     public static void main(String[] args) {
-        int a= (int) Math.pow(5,2);
+        Random rand = new Random();
+        int a= rand.nextInt(10);
         System.out.println("args = [" + a + "]");
     }
 

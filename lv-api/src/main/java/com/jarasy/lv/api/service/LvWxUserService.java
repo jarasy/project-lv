@@ -9,5 +9,5 @@ import com.jarasy.lv.api.domain.po.LvWxUser;
 public interface LvWxUserService {
     void insert(JSONObject jsonObject);
 
-    LvWxUser selectByOpenid(String openid);
+    LvWxUser selectByOpenid(String openid) throws Exception;
 }
