@@ -1,5 +1,7 @@
 package com.jarasy.lv.api.domain.vo;
 
+import com.jarasy.lv.api.domain.po.LvSkill;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ public class Property {
     private String name;
     private Integer profession;
     private Integer energy;
-    private String gender;
+    private Integer gender;
     private Integer rank;
     private Integer level;
     private Integer hy;
@@ -57,11 +59,11 @@ public class Property {
         this.energy = energy;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 

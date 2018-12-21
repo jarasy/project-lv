@@ -138,4 +138,14 @@
       `drop` = #{drop,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <!--自定义-->
+  <select id="selectByDrop"  resultMap="BaseResultMap">
+    select
+    lg.id as id,
+    lg.type as type
+    from lv_goods lg
+    where lg.drop=#{drop,jdbcType=INTEGER}
+  </select>
+
 </mapper>

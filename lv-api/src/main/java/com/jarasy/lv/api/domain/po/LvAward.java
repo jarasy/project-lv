@@ -3,6 +3,8 @@ package com.jarasy.lv.api.domain.po;
 public class LvAward {
     private String id;
 
+    private String openId;
+
     private String goods;
 
     private Integer exp;
@@ -15,6 +17,14 @@ public class LvAward {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public String getGoods() {

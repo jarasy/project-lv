@@ -9,8 +9,6 @@ public class LvRole {
 
     private String name;
 
-    private Integer energy;
-
     private Integer gender;
 
     private Integer rank;
@@ -21,15 +19,9 @@ public class LvRole {
 
     private Date createTime;
 
-    private Integer hy;
-
-    private Integer hs;
-
     private Date lastLoginTime;
 
     private Integer position;
-
-    private Long exp;
 
     private Integer deleted;
 
@@ -55,14 +47,6 @@ public class LvRole {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getEnergy() {
-        return energy;
-    }
-
-    public void setEnergy(Integer energy) {
-        this.energy = energy;
     }
 
     public Integer getGender() {
@@ -105,22 +89,6 @@ public class LvRole {
         this.createTime = createTime;
     }
 
-    public Integer getHy() {
-        return hy;
-    }
-
-    public void setHy(Integer hy) {
-        this.hy = hy;
-    }
-
-    public Integer getHs() {
-        return hs;
-    }
-
-    public void setHs(Integer hs) {
-        this.hs = hs;
-    }
-
     public Date getLastLoginTime() {
         return lastLoginTime;
     }
@@ -135,14 +103,6 @@ public class LvRole {
 
     public void setPosition(Integer position) {
         this.position = position;
-    }
-
-    public Long getExp() {
-        return exp;
-    }
-
-    public void setExp(Long exp) {
-        this.exp = exp;
     }
 
     public Integer getDeleted() {

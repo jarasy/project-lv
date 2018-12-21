@@ -18,6 +18,7 @@ import com.jarasy.lv.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -97,19 +98,32 @@ public class BackpakeServiceImpl implements BackpakeService {
     }
 
     @Override
-    public List<Map<String,String>> selectGoodsByDrop(Integer drop)  throws Exception {
-        List<Map<String,String>> lvGoods = (List<Map<String,String>>) redisService.hgetAllForObject(HashKeyPrefix.GOODS_INFO_DROP + drop, List.class);
+    public List<LvGoods> selectGoodsByDrop(Integer drop)  throws Exception {
+        List<LvGoods> rs=new ArrayList<>();
+        String lvGoods = (String) redisService.getString(HashKeyPrefix.GOODS_INFO_DROP + drop);
         if (null == lvGoods) {
-            lvGoods = lvGoodsMapper.selectByDrop(drop);
-            if (null != lvGoods) {
+            rs = lvGoodsMapper.selectByDrop(drop);
+            if (null != rs) {
+                StringBuffer lgs=new StringBuffer();
+                for (LvGoods l:rs){
+                    lgs.append(l.getId()+"_"+l.getType()+",");
+                }
                 // 更新缓存
-                redisService.hsetForObject(HashKeyPrefix.GOODS_INFO_DROP + drop, lvGoods, TimeUnit.DAYS.toSeconds(30));
+                redisService.setString(HashKeyPrefix.GOODS_INFO_DROP + drop, lgs.toString(), TimeUnit.DAYS.toSeconds(30));
             } else {
                 throw new DataErrorException("lvGoods drop 异常 " + drop);
             }
-            return lvGoods;
+            return rs;
         }
-        return lvGoods;
+
+        for (String gs:lvGoods.split(",")) {
+            LvGoods e=new LvGoods();
+            String[] split = gs.split("_");
+            e.setId(Integer.valueOf(split[0]));
+            e.setType(Integer.valueOf(split[1]));
+            rs.add(e);
+        }
+        return rs;
     }
 
 }

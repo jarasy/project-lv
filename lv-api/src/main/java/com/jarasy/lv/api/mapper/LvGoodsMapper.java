@@ -22,6 +22,6 @@ public interface LvGoodsMapper {
     int updateByPrimaryKey(LvGoods record);
 
     /*自定义*/
-    List<Map<String,String>> selectByDrop(@Param("drop") Integer drop);
+    List<LvGoods> selectByDrop(@Param("drop") Integer drop);
 
 }

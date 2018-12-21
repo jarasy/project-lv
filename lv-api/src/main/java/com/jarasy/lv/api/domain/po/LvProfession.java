@@ -7,7 +7,7 @@ public class LvProfession {
 
     private Integer type;
 
-    private Double hp;
+    private Float hp;
 
     private Double mp;
 
@@ -19,7 +19,7 @@ public class LvProfession {
 
     private Double hx;
 
-    private String skillType;
+    private Integer skillType;
 
     public Integer getId() {
         return id;
@@ -45,11 +45,11 @@ public class LvProfession {
         this.type = type;
     }
 
-    public Double getHp() {
+    public Float getHp() {
         return hp;
     }
 
-    public void setHp(Double hp) {
+    public void setHp(Float hp) {
         this.hp = hp;
     }
 
@@ -93,11 +93,11 @@ public class LvProfession {
         this.hx = hx;
     }
 
-    public String getSkillType() {
+    public Integer getSkillType() {
         return skillType;
     }
 
-    public void setSkillType(String skillType) {
-        this.skillType = skillType == null ? null : skillType.trim();
+    public void setSkillType(Integer skillType) {
+        this.skillType = skillType;
     }
 }

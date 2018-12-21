@@ -2,7 +2,6 @@ package com.jarasy.lv.api.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jarasy.lv.api.domain.po.LvGoods;
-import com.jarasy.lv.api.domain.po.LvRole;
 import com.jarasy.lv.api.domain.vo.Property;
 
 import java.util.List;
@@ -19,5 +18,5 @@ public interface BackpakeService {
     void dqGoodsForAll(JSONObject jSONObject) throws Exception;
     void dqGoodsForCount(JSONObject jSONObject) throws Exception;
     LvGoods selectGoodsById(Integer id)  throws Exception;
-    List<Map<String,String>> selectGoodsByDrop(Integer drop)  throws Exception;
+    List<LvGoods> selectGoodsByDrop(Integer drop)  throws Exception;
 }

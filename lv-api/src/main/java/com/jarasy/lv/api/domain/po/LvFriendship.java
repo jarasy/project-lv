@@ -5,7 +5,7 @@ public class LvFriendship {
 
     private Integer roleId;
 
-    private Integer fsId;
+    private String fsOpenId;
 
     public Integer getId() {
         return id;
@@ -23,11 +23,11 @@ public class LvFriendship {
         this.roleId = roleId;
     }
 
-    public Integer getFsId() {
-        return fsId;
+    public String getFsOpenId() {
+        return fsOpenId;
     }
 
-    public void setFsId(Integer fsId) {
-        this.fsId = fsId;
+    public void setFsOpenId(String fsOpenId) {
+        this.fsOpenId = fsOpenId == null ? null : fsOpenId.trim();
     }
 }

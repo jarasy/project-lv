@@ -7,10 +7,10 @@
     <result column="type" jdbcType="INTEGER" property="type" />
     <result column="monster_count" jdbcType="INTEGER" property="monsterCount" />
     <result column="bosses" jdbcType="VARCHAR" property="bosses" />
-    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="lv_limit" jdbcType="INTEGER" property="lvLimit" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, monster_count, bosses, limit
+    id, name, type, monster_count, bosses, lv_limit
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,10 +24,10 @@
   </delete>
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvMap">
     insert into lv_map (id, name, type, 
-      monster_count, bosses, limit
+      monster_count, bosses, lv_limit
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{monsterCount,jdbcType=INTEGER}, #{bosses,jdbcType=VARCHAR}, #{limit,jdbcType=INTEGER}
+      #{monsterCount,jdbcType=INTEGER}, #{bosses,jdbcType=VARCHAR}, #{lvLimit,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvMap">
@@ -48,8 +48,8 @@
       <if test="bosses != null">
         bosses,
       </if>
-      <if test="limit != null">
-        limit,
+      <if test="lvLimit != null">
+        lv_limit,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -68,8 +68,8 @@
       <if test="bosses != null">
         #{bosses,jdbcType=VARCHAR},
       </if>
-      <if test="limit != null">
-        #{limit,jdbcType=INTEGER},
+      <if test="lvLimit != null">
+        #{lvLimit,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -88,8 +88,8 @@
       <if test="bosses != null">
         bosses = #{bosses,jdbcType=VARCHAR},
       </if>
-      <if test="limit != null">
-        limit = #{limit,jdbcType=INTEGER},
+      <if test="lvLimit != null">
+        lv_limit = #{lvLimit,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -100,9 +100,10 @@
       type = #{type,jdbcType=INTEGER},
       monster_count = #{monsterCount,jdbcType=INTEGER},
       bosses = #{bosses,jdbcType=VARCHAR},
-      limit = #{limit,jdbcType=INTEGER}
+      lv_limit = #{lvLimit,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 
   <!--自定义-->
 
@@ -112,5 +113,4 @@
     from lv_map
     where type = #{type,jdbcType=INTEGER}
   </select>
-
 </mapper>

@@ -1,7 +1,9 @@
 package com.jarasy.lv.api.mapper;
 
 import com.jarasy.lv.api.domain.po.LvAward;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface LvAwardMapper {
     int deleteByPrimaryKey(String id);
 

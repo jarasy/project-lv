@@ -3,12 +3,13 @@
 <mapper namespace="com.jarasy.lv.api.mapper.LvAwardMapper">
   <resultMap id="BaseResultMap" type="com.jarasy.lv.api.domain.po.LvAward">
     <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
     <result column="goods" jdbcType="VARCHAR" property="goods" />
     <result column="exp" jdbcType="INTEGER" property="exp" />
     <result column="award" jdbcType="VARCHAR" property="award" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods, exp, award
+    id, open_id, goods, exp, award
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -21,16 +22,19 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvAward">
-    insert into lv_award (id, goods, exp, 
-      award)
-    values (#{id,jdbcType=VARCHAR}, #{goods,jdbcType=VARCHAR}, #{exp,jdbcType=INTEGER}, 
-      #{award,jdbcType=VARCHAR})
+    insert into lv_award (id, open_id, goods, 
+      exp, award)
+    values (#{id,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{goods,jdbcType=VARCHAR}, 
+      #{exp,jdbcType=INTEGER}, #{award,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvAward">
     insert into lv_award
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="openId != null">
+        open_id,
       </if>
       <if test="goods != null">
         goods,
@@ -46,6 +50,9 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="goods != null">
         #{goods,jdbcType=VARCHAR},
       </if>
@@ -60,6 +67,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jarasy.lv.api.domain.po.LvAward">
     update lv_award
     <set>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
       <if test="goods != null">
         goods = #{goods,jdbcType=VARCHAR},
       </if>
@@ -74,7 +84,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jarasy.lv.api.domain.po.LvAward">
     update lv_award
-    set goods = #{goods,jdbcType=VARCHAR},
+    set open_id = #{openId,jdbcType=VARCHAR},
+      goods = #{goods,jdbcType=VARCHAR},
       exp = #{exp,jdbcType=INTEGER},
       award = #{award,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}

@@ -1,13 +1,11 @@
 package com.jarasy.lv.api.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jarasy.lv.api.domain.po.LvBackpake;
-import com.jarasy.lv.api.domain.po.LvProfession;
-import com.jarasy.lv.api.domain.po.LvRole;
-import com.jarasy.lv.api.domain.po.LvWxUser;
+import com.jarasy.lv.api.domain.po.*;
 import com.jarasy.lv.api.domain.vo.Property;
 import com.jarasy.lv.api.mapper.LvBackpakeMapper;
 import com.jarasy.lv.api.mapper.LvProfessionMapper;
+import com.jarasy.lv.api.mapper.LvResMapper;
 import com.jarasy.lv.api.mapper.LvRoleMapper;
 import com.jarasy.lv.api.service.LvRoleService;
 import com.jarasy.lv.api.service.LvWxUserService;
@@ -16,6 +14,7 @@ import com.jarasy.lv.redis.HashKeyPrefix;
 import com.jarasy.lv.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -27,10 +26,13 @@ import java.util.concurrent.TimeUnit;
  * Created by wjh on 2018/11/20.
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class LvRoleServiceImpl implements LvRoleService {
 
     @Autowired
     private LvRoleMapper lvRoleMapper;
+    @Autowired
+    private LvResMapper lvResMapper;
     @Autowired
     private LvProfessionMapper lvProfessionMapper;
     @Autowired
@@ -42,6 +44,7 @@ public class LvRoleServiceImpl implements LvRoleService {
     @Override
     public void insert(JSONObject jSONObject) {
         LvRole lvRole = new LvRole();
+        LvRes lvRes=new LvRes();
         String openid = jSONObject.getString("openid");
         lvRole.setOpenid(openid);
         lvRole.setName(jSONObject.getString("name"));
@@ -49,14 +52,15 @@ public class LvRoleServiceImpl implements LvRoleService {
         lvRole.setRank(1);
         lvRole.setLevel(1);
         lvRole.setProfession(jSONObject.getInteger("profession"));
-        lvRole.setHs(100);
-        lvRole.setHy(0);
-        lvRole.setExp(0L);
         lvRole.setPosition(0);
         lvRole.setCreateTime(new Date());
         lvRoleMapper.insertSelective(lvRole);
-        redisService.hsetForObject(HashKeyPrefix.ROLE_INFO + openid, lvRole, TimeUnit.DAYS.toSeconds(30));
-
+        lvRes.setHs(100);
+        lvRes.setHy(0);
+        lvRes.setExp(0L);
+        lvRes.setEnergy(10);
+        lvRes.setOpenId(openid);
+        lvResMapper.insert(lvRes);
     }
 
     @Override
@@ -73,6 +77,13 @@ public class LvRoleServiceImpl implements LvRoleService {
             return lvRole;
         }
         return lvRole;
+    }
+    @Override
+    public void updateRole(LvRole lvRole) throws Exception {
+        redisService.delete(HashKeyPrefix.ROLE_INFO+lvRole.getOpenid());
+        lvRoleMapper.updateByPrimaryKeySelective(lvRole);
+        // 更新缓存
+        redisService.hsetForObject(HashKeyPrefix.ROLE_INFO + lvRole.getOpenid(), lvRole, TimeUnit.DAYS.toSeconds(30));
     }
 
     @Override
@@ -96,6 +107,7 @@ public class LvRoleServiceImpl implements LvRoleService {
         LvRole lvRole = selectByOpenid(openid);
         LvProfession lvProfession = selectProfessionById(lvRole.getProfession());
         List<Map<String, String>> zbs = lvBackpakeMapper.selectZbByType(lvRole.getId(), 2);
+        LvRes lvRes = lvResMapper.selectByPrimaryKey(openid);
         int hp=100;
         int mp=100;
         int gj=10;
@@ -122,11 +134,11 @@ public class LvRoleServiceImpl implements LvRoleService {
         property.setFy((int)(lvProfession.getFy()*fy));
         property.setSd((int)(lvProfession.getSd()*sd));
         property.setHx((int)(lvProfession.getHx()*hx));
-        property.setHs(lvRole.getHs());
-        property.setEnergy(lvRole.getEnergy());
-
-        property.setExp(lvRole.getExp());
-        property.setGender(gender==1?"男修":"女修");
+        property.setHs(lvRes.getHs());
+        property.setHy(lvRes.getHy());
+        property.setEnergy(lvRes.getEnergy());
+        property.setExp(lvRes.getExp());
+        property.setGender(gender);
         property.setId(lvRole.getId());
         property.setLevel(level);
         property.setName(lvRole.getName());

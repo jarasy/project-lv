@@ -5,6 +5,8 @@ import com.cyyz.spt.springbase.util.BaseController;
 import com.jarasy.lv.api.adapter.WeixinAdapter;
 import com.jarasy.lv.api.domain.po.LvRole;
 import com.jarasy.lv.api.domain.po.LvWxUser;
+import com.jarasy.lv.api.mapper.LvFriendshipMapper;
+import com.jarasy.lv.api.service.FightingService;
 import com.jarasy.lv.api.service.LvRoleService;
 import com.jarasy.lv.api.service.LvWxUserService;
 import com.jarasy.lv.common.http.DataResult;
@@ -26,6 +28,8 @@ public class FightingController extends BaseController {
     private LvWxUserService lvWxUserService;
     @Autowired
     private LvRoleService lvRoleService;
+    @Autowired
+    private FightingService fightingService;
 
 
 
@@ -35,12 +39,27 @@ public class FightingController extends BaseController {
      * @param jsonObject
      * @return
      */
-    @RequestMapping(value="/getRole",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
-    public DataResult getRole(@RequestBody JSONObject jsonObject){
+    @RequestMapping(value="/getMonsters",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult getMonsters(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            LvRole lvRole = lvRoleService.selectByOpenid(jsonObject.getString("openid"));
-            result.setData(null==lvRole?0:1);
+            result.setData(fightingService.getMonsters(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 获取
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/getPlayers",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult getPlayers(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData(fightingService.getPlayers(jsonObject));
         }catch(Exception e){
             this.processError(result,e);
         }

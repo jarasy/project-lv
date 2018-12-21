@@ -11,6 +11,7 @@ public class HashKeyPrefix {
     public final  static String PROFESSION_INFO= "profession:info:id";
     public final  static String GOODS_INFO= "goods:info:id";
     public final  static String MAP_INFO= "map:info:id";
+    public final  static String PET_INFO= "map:info:roleid";
 
     public final  static String MAP_INFO_TYPE= "map:info:type";
     public final  static String SKILL_INFO_TYPE= "skill:info:type";

@@ -115,6 +115,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+
+  <!--自定义-->
   <select id="selectGoodsByType"  resultType="java.util.HashMap">
     select
     lg.id as gid,
@@ -147,17 +149,12 @@
     where role_id = #{roleId,jdbcType=INTEGER} and type=#{type,jdbcType=INTEGER} and equipped=1 and exists (select t.id from lv_goods t where t.parameter like concat(#{wz}, '%') and t.id=goods_id)
   </update>
 
-
-  <!--自定义-->
-  <select id="selectByDrop"  resultType="java.util.HashMap">
+  <select id="selectByRoleIdAndGoodsId"  parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-    lg.id as id,
-    lg.type as type
-    from lv_goods lg
-    where lg.drop=#{drop,jdbcType=INTEGER}
+    <include refid="Base_Column_List" />
+    from lv_backpake
+    where role_id=#{roleId,jdbcType=INTEGER} and goods_id=#{goodsId,jdbcType=INTEGER}
   </select>
-
-  selectByDrop
 
 
 </mapper>

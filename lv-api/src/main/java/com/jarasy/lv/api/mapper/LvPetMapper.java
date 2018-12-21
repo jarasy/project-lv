@@ -1,7 +1,9 @@
 package com.jarasy.lv.api.mapper;
 
 import com.jarasy.lv.api.domain.po.LvPet;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface LvPetMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface LvPetMapper {
     int updateByPrimaryKeySelective(LvPet record);
 
     int updateByPrimaryKey(LvPet record);
+
+    LvPet selectByRoleId(Integer roleId);
 }

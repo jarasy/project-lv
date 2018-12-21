@@ -11,7 +11,7 @@ public class LvMap {
 
     private String bosses;
 
-    private Integer limit;
+    private Integer lvLimit;
 
     public Integer getId() {
         return id;
@@ -53,11 +53,11 @@ public class LvMap {
         this.bosses = bosses == null ? null : bosses.trim();
     }
 
-    public Integer getLimit() {
-        return limit;
+    public Integer getLvLimit() {
+        return lvLimit;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setLvLimit(Integer lvLimit) {
+        this.lvLimit = lvLimit;
     }
 }

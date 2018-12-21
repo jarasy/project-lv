@@ -13,7 +13,7 @@ public class LvSkill {
 
     private Integer rank;
 
-    private Integer limit;
+    private Integer lvLimit;
 
     private String parameter;
 
@@ -65,12 +65,12 @@ public class LvSkill {
         this.rank = rank;
     }
 
-    public Integer getLimit() {
-        return limit;
+    public Integer getLvLimit() {
+        return lvLimit;
     }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
+    public void setLvLimit(Integer lvLimit) {
+        this.lvLimit = lvLimit;
     }
 
     public String getParameter() {

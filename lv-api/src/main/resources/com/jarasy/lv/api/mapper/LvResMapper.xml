@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jarasy.lv.api.mapper.LvResMapper">
+  <resultMap id="BaseResultMap" type="com.jarasy.lv.api.domain.po.LvRes">
+    <id column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="hs" jdbcType="INTEGER" property="hs" />
+    <result column="hy" jdbcType="INTEGER" property="hy" />
+    <result column="energy" jdbcType="INTEGER" property="energy" />
+    <result column="exp" jdbcType="BIGINT" property="exp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    open_id, hs, hy, energy, exp
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lv_res
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from lv_res
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvRes">
+    insert into lv_res (open_id, hs, hy, 
+      energy, exp)
+    values (#{openId,jdbcType=VARCHAR}, #{hs,jdbcType=INTEGER}, #{hy,jdbcType=INTEGER}, 
+      #{energy,jdbcType=INTEGER}, #{exp,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvRes">
+    insert into lv_res
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="hs != null">
+        hs,
+      </if>
+      <if test="hy != null">
+        hy,
+      </if>
+      <if test="energy != null">
+        energy,
+      </if>
+      <if test="exp != null">
+        exp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="hs != null">
+        #{hs,jdbcType=INTEGER},
+      </if>
+      <if test="hy != null">
+        #{hy,jdbcType=INTEGER},
+      </if>
+      <if test="energy != null">
+        #{energy,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        #{exp,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jarasy.lv.api.domain.po.LvRes">
+    update lv_res
+    <set>
+      <if test="hs != null">
+        hs = #{hs,jdbcType=INTEGER},
+      </if>
+      <if test="hy != null">
+        hy = #{hy,jdbcType=INTEGER},
+      </if>
+      <if test="energy != null">
+        energy = #{energy,jdbcType=INTEGER},
+      </if>
+      <if test="exp != null">
+        exp = #{exp,jdbcType=BIGINT},
+      </if>
+    </set>
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jarasy.lv.api.domain.po.LvRes">
+    update lv_res
+    set hs = #{hs,jdbcType=INTEGER},
+      hy = #{hy,jdbcType=INTEGER},
+      energy = #{energy,jdbcType=INTEGER},
+      exp = #{exp,jdbcType=BIGINT}
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--自定义-->
+
+  <update id="updateFighting" parameterType="java.lang.String">
+    update lv_res
+    set  energy = energy-1
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </update>
+
+
+</mapper>

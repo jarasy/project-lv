@@ -8,11 +8,11 @@
     <result column="usehp" jdbcType="INTEGER" property="usehp" />
     <result column="usemp" jdbcType="INTEGER" property="usemp" />
     <result column="rank" jdbcType="INTEGER" property="rank" />
-    <result column="limit" jdbcType="INTEGER" property="limit" />
+    <result column="lv_limit" jdbcType="INTEGER" property="lvLimit" />
     <result column="parameter" jdbcType="VARCHAR" property="parameter" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, usehp, usemp, rank, limit, parameter
+    id, name, type, usehp, usemp, rank, lv_limit, parameter
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,10 +27,10 @@
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
     insert into lv_skill (id, name, type, 
       usehp, usemp, rank, 
-      limit, parameter)
+      lv_limit, parameter)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{usehp,jdbcType=INTEGER}, #{usemp,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, 
-      #{limit,jdbcType=INTEGER}, #{parameter,jdbcType=VARCHAR})
+      #{lvLimit,jdbcType=INTEGER}, #{parameter,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvSkill">
     insert into lv_skill
@@ -53,8 +53,8 @@
       <if test="rank != null">
         rank,
       </if>
-      <if test="limit != null">
-        limit,
+      <if test="lvLimit != null">
+        lv_limit,
       </if>
       <if test="parameter != null">
         parameter,
@@ -79,8 +79,8 @@
       <if test="rank != null">
         #{rank,jdbcType=INTEGER},
       </if>
-      <if test="limit != null">
-        #{limit,jdbcType=INTEGER},
+      <if test="lvLimit != null">
+        #{lvLimit,jdbcType=INTEGER},
       </if>
       <if test="parameter != null">
         #{parameter,jdbcType=VARCHAR},
@@ -105,8 +105,8 @@
       <if test="rank != null">
         rank = #{rank,jdbcType=INTEGER},
       </if>
-      <if test="limit != null">
-        limit = #{limit,jdbcType=INTEGER},
+      <if test="lvLimit != null">
+        lv_limit = #{lvLimit,jdbcType=INTEGER},
       </if>
       <if test="parameter != null">
         parameter = #{parameter,jdbcType=VARCHAR},
@@ -121,10 +121,11 @@
       usehp = #{usehp,jdbcType=INTEGER},
       usemp = #{usemp,jdbcType=INTEGER},
       rank = #{rank,jdbcType=INTEGER},
-      limit = #{limit,jdbcType=INTEGER},
+      lv_limit = #{lvLimit,jdbcType=INTEGER},
       parameter = #{parameter,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 
   <!--自定义-->
 

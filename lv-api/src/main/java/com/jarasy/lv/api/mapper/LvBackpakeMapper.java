@@ -28,4 +28,6 @@ public interface LvBackpakeMapper {
     int dqGoodsForCount(@Param("id") Integer id, @Param("count") Integer count);
 
     int outZbByTypeInRole(@Param("roleId") Integer roleId, @Param("type") Integer type, @Param("wz") Integer wz);
+
+    LvBackpake selectByRoleIdAndGoodsId(@Param("roleId") Integer roleId, @Param("goodsId") Integer goodsId);
 }

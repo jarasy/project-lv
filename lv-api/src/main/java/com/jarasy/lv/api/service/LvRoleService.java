@@ -17,4 +17,6 @@ public interface LvRoleService {
     Property getRoleProperty(String openid) throws Exception;
 
     LvProfession selectProfessionById(Integer id) throws Exception;
+
+    void updateRole(LvRole lvRole) throws Exception;
 }
