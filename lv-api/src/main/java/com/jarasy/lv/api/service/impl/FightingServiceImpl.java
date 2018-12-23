@@ -14,6 +14,7 @@ import com.jarasy.lv.redis.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +51,8 @@ public class FightingServiceImpl implements FightingService {
 
     @Override
     public JSONObject getMonsters(JSONObject jSONObject) throws Exception{
-        LvRes lvRes = lvResMapper.selectByPrimaryKey(jSONObject.getString("openId"));
+        String openId = jSONObject.getString("openId");
+        LvRes lvRes = lvResMapper.selectByPrimaryKey(openId);
         if(lvRes.getEnergy()<1){
             throw new Exception("精神力不足.");
         }
@@ -111,6 +113,7 @@ public class FightingServiceImpl implements FightingService {
         la.setExp(exp);
         la.setAward(hs+"");
         la.setGoods(goodsL.toString());
+        la.setOpenId(openId);
         lvAwardMapper.insert(la);
         //减少精神力
         lvResMapper.updateFighting(lvRes.getOpenId());
@@ -121,46 +124,58 @@ public class FightingServiceImpl implements FightingService {
     }
 
     @Override
-    public void getAwards(JSONObject jSONObject) throws Exception{
+    public JSONObject getAwards(JSONObject jSONObject) throws Exception{
         LvAward lvAward = lvAwardMapper.selectByPrimaryKey(jSONObject.getString("id"));
         LvRes lvRes = lvResMapper.selectByPrimaryKey(lvAward.getOpenId());
         LvRole lvRole = lvRoleService.selectByOpenid(lvAward.getOpenId());
         String goods = lvAward.getGoods();
         String award = lvAward.getAward().split("_")[0];
         Integer exp = lvAward.getExp();
+        boolean lvup=false;
 
         Long oldexp = lvRes.getExp();
         Integer level = lvRole.getLevel();
         if(oldexp+exp>level*level*level){
             lvRole.setLevel(lvRole.getLevel()+1);
             lvRes.setExp(0L);
+            lvup=true;
             lvRoleService.updateRole(lvRole);
         }
         lvRes.setHs(lvRes.getHs()+Integer.parseInt(award));
         lvRes.setExp(oldexp+exp);
-
-        for (String gs:goods.split(",")) {
-            String[] g = gs.split("_");
-            Integer id = Integer.valueOf(g[0]);
-            LvGoods lvGoods = backpakeService.selectGoodsById(id);
-            LvBackpake lb = lvBackpakeMapper.selectByRoleIdAndGoodsId(lvRole.getId(), id);
-            if(null!=lb){
-                lb.setCount(lb.getCount()+Integer.valueOf(g[1]));
-            }else {
-                LvBackpake lv=new LvBackpake();
-                lv.setRoleId(lvRole.getId());
-                lv.setGoodsId(lvGoods.getId());
-                lv.setType(lvGoods.getType());
-                lv.setEquipped(0);
-                lv.setCount(Integer.valueOf(g[1]));
-                lvBackpakeMapper.insert(lv);
+        List<JSONObject> list=new ArrayList<JSONObject>();
+        if(!StringUtils.isEmpty(goods)){
+            for (String gs:goods.split(",")) {
+                String[] g = gs.split("_");
+                Integer id = Integer.valueOf(g[0]);
+                LvGoods lvGoods = backpakeService.selectGoodsById(id);
+                JSONObject jg=new JSONObject();
+                jg.put("name",lvGoods.getName());
+                jg.put("count",g[1]);
+                list.add(jg);
+                LvBackpake lb = lvBackpakeMapper.selectByRoleIdAndGoodsId(lvRole.getId(), id);
+                if(null!=lb){
+                    lb.setCount(lb.getCount()+Integer.valueOf(g[1]));
+                }else {
+                    LvBackpake lv=new LvBackpake();
+                    lv.setRoleId(lvRole.getId());
+                    lv.setGoodsId(lvGoods.getId());
+                    lv.setType(lvGoods.getType());
+                    lv.setEquipped(0);
+                    lv.setCount(Integer.valueOf(g[1]));
+                    lvBackpakeMapper.insert(lv);
+                }
             }
         }
 
         lvResMapper.updateByPrimaryKeySelective(lvRes);
-        lvResMapper.updateByPrimaryKeySelective(lvRes);
         lvAwardMapper.deleteByPrimaryKey(lvAward.getId());
 
+        JSONObject result=new JSONObject();
+        result.put("goods",list);
+        result.put("lvUp",lvup);
+
+        return result;
     }
 
     @Override
@@ -327,4 +342,5 @@ public class FightingServiceImpl implements FightingService {
 
         return property;
     }
+
 }

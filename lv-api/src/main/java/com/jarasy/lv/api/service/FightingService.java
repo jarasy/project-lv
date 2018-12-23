@@ -23,6 +23,6 @@ public interface FightingService {
     List<LvSkill> getSkillsByType(Integer type) throws Exception;
     LvPet getPetByRoleId(Integer roleId) throws Exception;
 
-    void getAwards(JSONObject jSONObject) throws Exception;
+    JSONObject getAwards(JSONObject jSONObject) throws Exception;
 
 }

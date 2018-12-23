@@ -35,7 +35,7 @@ public class FightingController extends BaseController {
 
 
     /**
-     * 获取
+     * 获取怪物信息
      * @param jsonObject
      * @return
      */
@@ -51,7 +51,7 @@ public class FightingController extends BaseController {
     }
 
     /**
-     * 获取
+     * 获取玩家信息
      * @param jsonObject
      * @return
      */
@@ -66,6 +66,21 @@ public class FightingController extends BaseController {
         return result;
     }
 
+    /**
+     * 获取
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/getAwards",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult getAwards(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData(fightingService.getAwards(jsonObject));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
 
 
 }
