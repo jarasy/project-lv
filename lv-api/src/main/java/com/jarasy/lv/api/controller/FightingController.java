@@ -43,7 +43,7 @@ public class FightingController extends BaseController {
     public DataResult getMonsters(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData(fightingService.getMonsters(jsonObject));
+            result.setData(fightingService.getMonsters(jsonObject.getString("openId"),jsonObject.getInteger("mapId")));
         }catch(Exception e){
             this.processError(result,e);
         }
@@ -59,7 +59,7 @@ public class FightingController extends BaseController {
     public DataResult getPlayers(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData(fightingService.getPlayers(jsonObject));
+            result.setData(fightingService.getPlayers(jsonObject.getString("openId")));
         }catch(Exception e){
             this.processError(result,e);
         }
@@ -75,7 +75,7 @@ public class FightingController extends BaseController {
     public DataResult getAwards(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData(fightingService.getAwards(jsonObject));
+            result.setData(fightingService.getAwards(jsonObject.getString("id")));
         }catch(Exception e){
             this.processError(result,e);
         }

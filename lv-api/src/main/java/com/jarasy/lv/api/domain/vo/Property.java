@@ -10,6 +10,7 @@ import java.util.List;
 public class Property {
     private Integer id;
     private String name;
+    private Integer type;
     private Integer profession;
     private Integer energy;
     private Integer gender;
@@ -41,6 +42,14 @@ public class Property {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getProfession() {

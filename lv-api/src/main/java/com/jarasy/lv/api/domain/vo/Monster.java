@@ -1,5 +1,7 @@
 package com.jarasy.lv.api.domain.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.jarasy.lv.api.domain.po.LvSkill;
 
 import java.util.List;

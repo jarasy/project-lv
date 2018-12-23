@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         DataResult result = DataResult.init();
         try{
             JSONObject jsonObject1 = weixinAdapter.jscode2session(jsonObject.getString("code"));
-            result.setData(jsonObject1.getString("openid"));
+            result.setData(jsonObject1.getString("openId"));
         }catch(Exception e){
             this.processError(result,e);
         }
@@ -80,7 +80,7 @@ public class UserController extends BaseController {
     public DataResult getRole(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            LvRole lvRole = lvRoleService.selectByOpenid(jsonObject.getString("openid"));
+            LvRole lvRole = lvRoleService.selectByOpenid(jsonObject.getString("openId"));
             result.setData(null==lvRole?0:1);
         }catch(Exception e){
             this.processError(result,e);
@@ -98,7 +98,7 @@ public class UserController extends BaseController {
         DataResult result = DataResult.init();
         try{
             lvRoleService.insert(jsonObject);
-            result.setData(JSONObject.toJSONString(lvRoleService.getRoleProperty(jsonObject.getString("openid"))));
+            result.setData(lvRoleService.getRoleProperty(jsonObject.getString("openId")));
         }catch(Exception e){
             this.processError(result,e);
         }
@@ -114,7 +114,7 @@ public class UserController extends BaseController {
     public DataResult getRoleProperty(@RequestBody JSONObject jsonObject){
         DataResult result = DataResult.init();
         try{
-            result.setData(JSONObject.toJSONString(lvRoleService.getRoleProperty(jsonObject.getString("openid"))));
+            result.setData(lvRoleService.getRoleProperty(jsonObject.getString("openId")));
         }catch(Exception e){
             this.processError(result,e);
         }

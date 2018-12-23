@@ -50,15 +50,13 @@ public class FightingServiceImpl implements FightingService {
     private RedisService redisService;
 
     @Override
-    public JSONObject getMonsters(JSONObject jSONObject) throws Exception{
-        String openId = jSONObject.getString("openId");
+    public JSONObject getMonsters(String openId,Integer mapId) throws Exception{
         LvRes lvRes = lvResMapper.selectByPrimaryKey(openId);
         if(lvRes.getEnergy()<1){
             throw new Exception("精神力不足.");
         }
         List<Monster> monsters=new ArrayList<Monster>();
         Random rand = new Random();
-        Integer mapId = jSONObject.getInteger("mapId");
         LvMap map = getMapById(mapId);
         int count= rand.nextInt(map.getMonsterCount())+1;
         List<LvProperty> lvPropertys = lvPropertyMapper.selectByTypeAndPosition(1, mapId);
@@ -124,8 +122,8 @@ public class FightingServiceImpl implements FightingService {
     }
 
     @Override
-    public JSONObject getAwards(JSONObject jSONObject) throws Exception{
-        LvAward lvAward = lvAwardMapper.selectByPrimaryKey(jSONObject.getString("id"));
+    public JSONObject getAwards(String aid) throws Exception{
+        LvAward lvAward = lvAwardMapper.selectByPrimaryKey(aid);
         LvRes lvRes = lvResMapper.selectByPrimaryKey(lvAward.getOpenId());
         LvRole lvRole = lvRoleService.selectByOpenid(lvAward.getOpenId());
         String goods = lvAward.getGoods();
@@ -179,22 +177,32 @@ public class FightingServiceImpl implements FightingService {
     }
 
     @Override
-    public JSONObject getPlayers(JSONObject jSONObject) throws Exception{
-        LvRole lvRole = lvRoleService.selectByOpenid(jSONObject.getString("openId"));
+    public List<Property> getPlayers(String openId) throws Exception{
+        LvRole lvRole = lvRoleService.selectByOpenid(openId);
         LvFriendship lvFriendship = lvFriendshipMapper.selectByRoleId(lvRole.getId());
         LvRole friendship = lvRoleService.selectByOpenid(lvFriendship.getFsOpenId());
         LvPet lvPet=getPetByRoleId(lvRole.getId());
         //player
         Property player = setPlayerProperty(lvRole);
+        player.setType(1);
         //friendship
         Property fs = setPlayerProperty(friendship);
+        fs.setType(2);
         //pet
         Property pet = setPetProperty(lvPet);
+        pet.setType(3);
 
-        JSONObject result=new JSONObject();
-        result.put("player",player);
-        result.put("friendship",fs);
-        result.put("pet",pet);
+        List<Property> result=new ArrayList<>();
+        if(null!=player){
+            result.add(player);
+        }
+        if(null!=fs){
+            result.add(fs);
+        }
+        if(null!=pet){
+            result.add(pet);
+        }
+
         return result;
     }
 
