@@ -19,7 +19,7 @@ public class LvProfession {
 
     private Double hx;
 
-    private Integer skillType;
+    private String skills;
 
     public Integer getId() {
         return id;
@@ -93,11 +93,11 @@ public class LvProfession {
         this.hx = hx;
     }
 
-    public Integer getSkillType() {
-        return skillType;
+    public String getSkills() {
+        return skills;
     }
 
-    public void setSkillType(Integer skillType) {
-        this.skillType = skillType;
+    public void setSkills(String skills) {
+        this.skills = skills == null ? null : skills.trim();
     }
 }

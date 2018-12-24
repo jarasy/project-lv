@@ -13,13 +13,13 @@
     <result column="fy" jdbcType="INTEGER" property="fy" />
     <result column="sd" jdbcType="INTEGER" property="sd" />
     <result column="hx" jdbcType="INTEGER" property="hx" />
-    <result column="skill_type" jdbcType="INTEGER" property="skillType" />
+    <result column="skills" jdbcType="VARCHAR" property="skills" />
     <result column="award" jdbcType="VARCHAR" property="award" />
     <result column="exp" jdbcType="INTEGER" property="exp" />
     <result column="position" jdbcType="INTEGER" property="position" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, lv, rank, hp, mp, gj, fy, sd, hx, skill_type, award, exp, position
+    id, name, type, lv, rank, hp, mp, gj, fy, sd, hx, skills, award, exp, position
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -35,12 +35,12 @@
     insert into lv_property (id, name, type, 
       lv, rank, hp, mp, 
       gj, fy, sd, hx, 
-      skill_type, award, exp, 
+      skills, award, exp, 
       position)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{lv,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{hp,jdbcType=INTEGER}, #{mp,jdbcType=INTEGER}, 
       #{gj,jdbcType=INTEGER}, #{fy,jdbcType=INTEGER}, #{sd,jdbcType=INTEGER}, #{hx,jdbcType=INTEGER}, 
-      #{skillType,jdbcType=INTEGER}, #{award,jdbcType=VARCHAR}, #{exp,jdbcType=INTEGER}, 
+      #{skills,jdbcType=VARCHAR}, #{award,jdbcType=VARCHAR}, #{exp,jdbcType=INTEGER}, 
       #{position,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvProperty">
@@ -79,8 +79,8 @@
       <if test="hx != null">
         hx,
       </if>
-      <if test="skillType != null">
-        skill_type,
+      <if test="skills != null">
+        skills,
       </if>
       <if test="award != null">
         award,
@@ -126,8 +126,8 @@
       <if test="hx != null">
         #{hx,jdbcType=INTEGER},
       </if>
-      <if test="skillType != null">
-        #{skillType,jdbcType=INTEGER},
+      <if test="skills != null">
+        #{skills,jdbcType=VARCHAR},
       </if>
       <if test="award != null">
         #{award,jdbcType=VARCHAR},
@@ -173,8 +173,8 @@
       <if test="hx != null">
         hx = #{hx,jdbcType=INTEGER},
       </if>
-      <if test="skillType != null">
-        skill_type = #{skillType,jdbcType=INTEGER},
+      <if test="skills != null">
+        skills = #{skills,jdbcType=VARCHAR},
       </if>
       <if test="award != null">
         award = #{award,jdbcType=VARCHAR},
@@ -200,7 +200,7 @@
       fy = #{fy,jdbcType=INTEGER},
       sd = #{sd,jdbcType=INTEGER},
       hx = #{hx,jdbcType=INTEGER},
-      skill_type = #{skillType,jdbcType=INTEGER},
+      skills = #{skills,jdbcType=VARCHAR},
       award = #{award,jdbcType=VARCHAR},
       exp = #{exp,jdbcType=INTEGER},
       position = #{position,jdbcType=INTEGER}

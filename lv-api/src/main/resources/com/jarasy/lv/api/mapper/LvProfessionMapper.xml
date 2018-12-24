@@ -11,10 +11,10 @@
     <result column="fy" jdbcType="DOUBLE" property="fy" />
     <result column="sd" jdbcType="DOUBLE" property="sd" />
     <result column="hx" jdbcType="DOUBLE" property="hx" />
-    <result column="skill_type" jdbcType="INTEGER" property="skillType" />
+    <result column="skills" jdbcType="VARCHAR" property="skills" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, type, hp, mp, gj, fy, sd, hx, skill_type
+    id, name, type, hp, mp, gj, fy, sd, hx, skills
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -29,10 +29,10 @@
   <insert id="insert" parameterType="com.jarasy.lv.api.domain.po.LvProfession">
     insert into lv_profession (id, name, type, 
       hp, mp, gj, fy, 
-      sd, hx, skill_type)
+      sd, hx, skills)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{hp,jdbcType=REAL}, #{mp,jdbcType=DOUBLE}, #{gj,jdbcType=DOUBLE}, #{fy,jdbcType=DOUBLE}, 
-      #{sd,jdbcType=DOUBLE}, #{hx,jdbcType=DOUBLE}, #{skillType,jdbcType=INTEGER})
+      #{sd,jdbcType=DOUBLE}, #{hx,jdbcType=DOUBLE}, #{skills,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jarasy.lv.api.domain.po.LvProfession">
     insert into lv_profession
@@ -64,8 +64,8 @@
       <if test="hx != null">
         hx,
       </if>
-      <if test="skillType != null">
-        skill_type,
+      <if test="skills != null">
+        skills,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -96,8 +96,8 @@
       <if test="hx != null">
         #{hx,jdbcType=DOUBLE},
       </if>
-      <if test="skillType != null">
-        #{skillType,jdbcType=INTEGER},
+      <if test="skills != null">
+        #{skills,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -128,8 +128,8 @@
       <if test="hx != null">
         hx = #{hx,jdbcType=DOUBLE},
       </if>
-      <if test="skillType != null">
-        skill_type = #{skillType,jdbcType=INTEGER},
+      <if test="skills != null">
+        skills = #{skills,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -144,7 +144,8 @@
       fy = #{fy,jdbcType=DOUBLE},
       sd = #{sd,jdbcType=DOUBLE},
       hx = #{hx,jdbcType=DOUBLE},
-      skill_type = #{skillType,jdbcType=INTEGER}
+      skills = #{skills,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

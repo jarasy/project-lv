@@ -80,7 +80,7 @@ public class FightingServiceImpl implements FightingService {
             monster.setFy((int) (p.getFy()*xs));
             monster.setSd((int) (p.getSd()*xs));
             monster.setHx((int) (p.getHx()*xs));
-            monster.setSkills(getSkillsByType(p.getSkillType()));
+            monster.setSkills(getSkillsByType(p.getSkills()));
             monsters.add(monster);
             exp+=p.getExp()*xs;
             hs+=Integer.parseInt(p.getAward())*xs;
@@ -239,17 +239,25 @@ public class FightingServiceImpl implements FightingService {
     }
 
     @Override
-    public List<LvSkill> getSkillsByType(Integer type) throws Exception{
-        List<LvSkill> skills =(List<LvSkill>) redisService.hgetAllForObject(HashKeyPrefix.SKILL_INFO_TYPE + type, List.class);
-        if (null == skills) {
-            skills = lvSkillMapper.selectByType(type);
-            if (null != skills) {
-                // 更新缓存
-                redisService.hsetForObject(HashKeyPrefix.SKILL_INFO_TYPE + type, skills, TimeUnit.DAYS.toSeconds(60));
-            } else {
-                throw new DataErrorException("LvSkill type 异常 " + type);
+    public List<LvSkill> getSkillsByType(String ids) throws Exception{
+        List<LvSkill> skills=new ArrayList<>();
+        if(!StringUtils.isEmpty(ids)){
+            String[] split = ids.split("_");
+            for(String id:split){
+                LvSkill skill =(LvSkill) redisService.hgetAllForObject(HashKeyPrefix.SKILL_INFO + id, LvSkill.class);
+                if(null==skill){
+                    skill = lvSkillMapper.selectByPrimaryKey(Integer.valueOf(id));
+                    if (null != skill) {
+                        // 更新缓存
+                        redisService.hsetForObject(HashKeyPrefix.SKILL_INFO + id, skill, TimeUnit.DAYS.toSeconds(60));
+                        skills.add(skill);
+                    } else {
+                        throw new DataErrorException("LvSkill id 异常 " + id);
+                    }
+                }else {
+                    skills.add(skill);
+                }
             }
-            return skills;
         }
         return skills;
     }
@@ -313,7 +321,7 @@ public class FightingServiceImpl implements FightingService {
         property.setRank(lvRole.getRank());
         property.setPosition(lvRole.getPosition());
 
-        property.setSkills(getSkillsByType(lvProfession.getSkillType()));
+        property.setSkills(getSkillsByType(lvProfession.getSkills()));
 
         return property;
     }
@@ -346,7 +354,7 @@ public class FightingServiceImpl implements FightingService {
         property.setProfession(lvPet.getProfession());
         property.setRank(lvPet.getRank());
 
-        property.setSkills(getSkillsByType(lvProfession.getSkillType()));
+        property.setSkills(getSkillsByType(lvProfession.getSkills()));
 
         return property;
     }

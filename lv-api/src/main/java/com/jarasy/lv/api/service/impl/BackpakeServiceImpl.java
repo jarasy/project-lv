@@ -126,4 +126,15 @@ public class BackpakeServiceImpl implements BackpakeService {
         return rs;
     }
 
+    @Override
+    public void useGoodsForCount(Integer id,Integer count) throws Exception {
+        LvBackpake lvBackpake = lvBackpakeMapper.selectByPrimaryKey(id);
+        Integer goodsId = lvBackpake.getGoodsId();
+        LvGoods lvGoods = selectGoodsById(goodsId);
+        String parameter = lvGoods.getParameter();
+        if ("1".equals(parameter.split("_")[0])){
+            lvBackpakeMapper.deleteByPrimaryKey(id);
+        }
+    }
+
 }

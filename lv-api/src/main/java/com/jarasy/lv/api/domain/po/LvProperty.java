@@ -23,7 +23,7 @@ public class LvProperty {
 
     private Integer hx;
 
-    private Integer skillType;
+    private String skills;
 
     private String award;
 
@@ -119,12 +119,12 @@ public class LvProperty {
         this.hx = hx;
     }
 
-    public Integer getSkillType() {
-        return skillType;
+    public String getSkills() {
+        return skills;
     }
 
-    public void setSkillType(Integer skillType) {
-        this.skillType = skillType;
+    public void setSkills(String skills) {
+        this.skills = skills == null ? null : skills.trim();
     }
 
     public String getAward() {

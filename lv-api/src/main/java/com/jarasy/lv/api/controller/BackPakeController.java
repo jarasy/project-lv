@@ -138,5 +138,21 @@ public class BackPakeController extends BaseController {
         return result;
     }
 
+    /**
+     * 使用物品(数量)
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/useGoodsForCount",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult useGoodsForCount(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            backpakeService.useGoodsForCount(jsonObject.getInteger("id"),jsonObject.getInteger("count"));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
 
 }

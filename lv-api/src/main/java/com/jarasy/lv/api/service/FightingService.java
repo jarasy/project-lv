@@ -20,7 +20,7 @@ public interface FightingService {
     LvMap getMapById(Integer id) throws Exception;
     List<LvMap> getMapsByType(Integer type) throws Exception;
 
-    List<LvSkill> getSkillsByType(Integer type) throws Exception;
+    List<LvSkill> getSkillsByType(String ids) throws Exception;
     LvPet getPetByRoleId(Integer roleId) throws Exception;
 
     JSONObject getAwards(String id) throws Exception;

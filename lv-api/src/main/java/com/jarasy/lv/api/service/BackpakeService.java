@@ -19,4 +19,6 @@ public interface BackpakeService {
     void dqGoodsForCount(JSONObject jSONObject) throws Exception;
     LvGoods selectGoodsById(Integer id)  throws Exception;
     List<LvGoods> selectGoodsByDrop(Integer drop)  throws Exception;
+
+    void useGoodsForCount(Integer id,Integer count) throws Exception;
 }
