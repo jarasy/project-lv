@@ -108,12 +108,12 @@ public class LvRoleServiceImpl implements LvRoleService {
         LvProfession lvProfession = selectProfessionById(lvRole.getProfession());
         List<Map<String, String>> zbs = lvBackpakeMapper.selectZbByType(lvRole.getId(), 2);
         LvRes lvRes = lvResMapper.selectByPrimaryKey(openid);
-        int hp=100;
-        int mp=100;
+        int hp=50;
+        int mp=30;
         int gj=10;
-        int fy=5;
-        int sd=5;
-        int hx=5;
+        int fy=4;
+        int sd=3;
+        int hx=3;
         for (Map<String, String> zb:zbs) {
             String parameter = zb.get("parameter");
             String[] split = parameter.split("_");
