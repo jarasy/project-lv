@@ -315,7 +315,7 @@ public class FightingServiceImpl implements FightingService {
         property.setExp(lvRes.getExp());
         property.setGender(gender);
         property.setId(lvRole.getId());
-        property.setLevel(level);
+        property.setLv(level);
         property.setName(lvRole.getName());
         property.setProfession(lvRole.getProfession());
         property.setRank(lvRole.getRank());
@@ -349,7 +349,7 @@ public class FightingServiceImpl implements FightingService {
         property.setExp(lvPet.getExp());
         property.setGender(gender);
         property.setId(lvPet.getId());
-        property.setLevel(level);
+        property.setLv(level);
         property.setName(lvPet.getName());
         property.setProfession(lvPet.getProfession());
         property.setRank(lvPet.getRank());

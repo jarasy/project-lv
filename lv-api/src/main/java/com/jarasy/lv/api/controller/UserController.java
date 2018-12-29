@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         DataResult result = DataResult.init();
         try{
             JSONObject jsonObject1 = weixinAdapter.jscode2session(jsonObject.getString("code"));
-            result.setData(jsonObject1.getString("openId"));
+            result.setData(jsonObject1.getString("openid"));
         }catch(Exception e){
             this.processError(result,e);
         }

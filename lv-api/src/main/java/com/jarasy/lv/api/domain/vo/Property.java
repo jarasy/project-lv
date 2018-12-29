@@ -15,7 +15,7 @@ public class Property {
     private Integer energy;
     private Integer gender;
     private Integer rank;
-    private Integer level;
+    private Integer lv;
     private Integer hy;
     private Integer hs;
     private Long exp;
@@ -84,12 +84,12 @@ public class Property {
         this.rank = rank;
     }
 
-    public Integer getLevel() {
-        return level;
+    public Integer getLv() {
+        return lv;
     }
 
-    public void setLevel(Integer level) {
-        this.level = level;
+    public void setLv(Integer lv) {
+        this.lv = lv;
     }
 
     public Integer getHy() {
