@@ -154,6 +154,7 @@ public class FightingServiceImpl implements FightingService {
                 LvBackpake lb = lvBackpakeMapper.selectByRoleIdAndGoodsId(lvRole.getId(), id);
                 if(null!=lb){
                     lb.setCount(lb.getCount()+Integer.valueOf(g[1]));
+                    lvBackpakeMapper.updateByPrimaryKeySelective(lb);
                 }else {
                     LvBackpake lv=new LvBackpake();
                     lv.setRoleId(lvRole.getId());

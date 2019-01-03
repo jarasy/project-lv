@@ -2,6 +2,7 @@ com\jarasy\lv\common\constant\CommonErrorCode.class
 com\jarasy\lv\common\http\PageRequest.class
 com\jarasy\lv\common\exception\ErrorCode.class
 com\jarasy\lv\common\exception\ServiceException.class
+com\jarasy\lv\common\utils\EscapeUnescape.class
 com\jarasy\lv\common\exception\AuthException.class
 com\jarasy\lv\common\exception\ParamException.class
 com\jarasy\lv\common\http\Result.class

@@ -67,7 +67,7 @@ public class FightingController extends BaseController {
     }
 
     /**
-     * 获取
+     * 获取奖励
      * @param jsonObject
      * @return
      */
