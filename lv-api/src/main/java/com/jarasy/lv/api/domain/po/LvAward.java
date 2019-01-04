@@ -11,6 +11,8 @@ public class LvAward {
 
     private String award;
 
+    private Integer position;
+
     public String getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class LvAward {
 
     public void setAward(String award) {
         this.award = award == null ? null : award.trim();
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

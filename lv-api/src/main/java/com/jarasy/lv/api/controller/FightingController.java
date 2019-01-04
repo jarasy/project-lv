@@ -82,5 +82,37 @@ public class FightingController extends BaseController {
         return result;
     }
 
+    /**
+     * 获取boss凭证
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/getFToken",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult getFToken(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData(fightingService.getFToken(jsonObject.getString("openId"),jsonObject.getInteger("mapId")));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
+    /**
+     * 获取boss
+     * @param jsonObject
+     * @return
+     */
+    @RequestMapping(value="/getBoss",method= RequestMethod.POST, produces = "application/json;charset=utf-8")
+    public DataResult getBoss(@RequestBody JSONObject jsonObject){
+        DataResult result = DataResult.init();
+        try{
+            result.setData(fightingService.getBoss(jsonObject.getString("fToken")));
+        }catch(Exception e){
+            this.processError(result,e);
+        }
+        return result;
+    }
+
 
 }

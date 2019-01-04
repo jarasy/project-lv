@@ -84,10 +84,28 @@ public class FightingServiceImpl implements FightingService {
             monsters.add(monster);
             exp+=p.getExp()*xs;
             hs+=Integer.parseInt(p.getAward())*xs;
+
+            String[] dgs = p.getDropGoods().split(",");
+            for (String dg:dgs) {
+                String[] g = dg.split("_");
+                //概率 10000/
+                int gl = Integer.parseInt(g[1]);
+                if(rand.nextInt(10000)<gl){
+                    Integer c = gs.get(Integer.valueOf(g[0]));
+                    if (null!=c){
+                        gs.put(Integer.valueOf(g[0]),c+1);
+                    }else {
+                        gs.put(Integer.valueOf(g[0]),1);
+                    }
+                }
+
+            }
+
+
             idx = rand.nextInt(goods.size());
             LvGoods g = goods.get(idx);
             if ("1".equals(g.getType())){
-                Integer c = gs.get(g.getType());
+                Integer c = gs.get(g.getId());
                 if (null!=c){
                     gs.put(g.getId(),c+1);
                 }else {
@@ -127,7 +145,7 @@ public class FightingServiceImpl implements FightingService {
         LvRes lvRes = lvResMapper.selectByPrimaryKey(lvAward.getOpenId());
         LvRole lvRole = lvRoleService.selectByOpenid(lvAward.getOpenId());
         String goods = lvAward.getGoods();
-        String award = lvAward.getAward().split("_")[0];
+        String hs = lvAward.getAward().split("_")[0];
         Integer exp = lvAward.getExp();
         boolean lvup=false;
 
@@ -139,7 +157,7 @@ public class FightingServiceImpl implements FightingService {
             lvup=true;
             lvRoleService.updateRole(lvRole);
         }
-        lvRes.setHs(lvRes.getHs()+Integer.parseInt(award));
+        lvRes.setHs(lvRes.getHs()+Integer.parseInt(hs));
         lvRes.setExp(oldexp+exp);
         List<JSONObject> list=new ArrayList<JSONObject>();
         if(!StringUtils.isEmpty(goods)){
@@ -170,10 +188,167 @@ public class FightingServiceImpl implements FightingService {
         lvResMapper.updateByPrimaryKeySelective(lvRes);
         lvAwardMapper.deleteByPrimaryKey(lvAward.getId());
 
+        JSONObject jy=new JSONObject();
+        jy.put("name","经验");
+        jy.put("count",exp);
+        list.add(jy);
+        JSONObject hsj=new JSONObject();
+        hsj.put("name","魂石");
+        hsj.put("count",hs);
+        list.add(hsj);
+
         JSONObject result=new JSONObject();
         result.put("goods",list);
         result.put("lvUp",lvup);
 
+        return result;
+    }
+
+    @Override
+    public JSONObject getFToken(String openId, Integer mapId) throws Exception {
+        LvRes lvRes = lvResMapper.selectByPrimaryKey(openId);
+        if(lvRes.getEnergy()<15){
+            throw new Exception("精神力不足.");
+        }
+
+        LvAward la=new LvAward();
+        String laid = UUID.randomUUID().toString().replace("-", "");
+        la.setId(laid);
+        la.setOpenId(openId);
+        la.setPosition(mapId);
+        lvAwardMapper.insert(la);
+
+        lvRes.setEnergy(lvRes.getEnergy()-15);
+        //减少精神力
+        lvResMapper.updateByPrimaryKeySelective(lvRes);
+
+        JSONObject result=new JSONObject();
+        result.put("fToken",laid);
+        return result;
+    }
+
+    @Override
+    public JSONObject getBoss(String fToken) throws Exception {
+        LvAward lvAward = lvAwardMapper.selectByPrimaryKey(fToken);
+        List<Monster> monsters=new ArrayList<Monster>();
+        Random rand = new Random();
+        LvMap map = getMapById(lvAward.getPosition());
+        int count= rand.nextInt(map.getMonsterCount());
+        List<LvProperty> lvPropertys = lvPropertyMapper.selectByTypeAndPosition(2, map.getId());
+        List<LvProperty> bosses = lvPropertyMapper.selectByTypeAndPosition(3, map.getId());
+        List<LvGoods> goods = backpakeService.selectGoodsByDrop(map.getId());
+        Map<Integer,Integer> gs=new HashMap<>();
+        int exp=0;
+        int hs=0;
+        //boss
+        {
+            LvProperty p = bosses.get(0);
+            int lv = p.getLv() - 3 + rand.nextInt(7);
+            Monster monster = new Monster();
+            monster.setLv(lv);
+            monster.setId(p.getId());
+            monster.setName(p.getName());
+            monster.setRank(p.getRank());
+            double xs = (float) lv / p.getLv();
+            monster.setHp((int) (p.getHp() * xs));
+            monster.setMp((int) (p.getMp() * xs));
+            monster.setGj((int) (p.getGj() * xs));
+            monster.setFy((int) (p.getFy() * xs));
+            monster.setSd((int) (p.getSd() * xs));
+            monster.setHx((int) (p.getHx() * xs));
+            monster.setSkills(getSkillsByType(p.getSkills()));
+            monsters.add(monster);
+            exp += p.getExp() * xs;
+            hs += Integer.parseInt(p.getAward()) * xs;
+
+            String[] dgs = p.getDropGoods().split(",");
+            for (String dg : dgs) {
+                String[] g = dg.split("_");
+                //概率 10000/
+                int gl = Integer.parseInt(g[1]);
+                if (rand.nextInt(10000) < gl) {
+                    Integer c = gs.get(Integer.valueOf(g[0]));
+                    if (null != c) {
+                        gs.put(Integer.valueOf(g[0]), c + 1);
+                    } else {
+                        gs.put(Integer.valueOf(g[0]), 1);
+                    }
+                }
+
+            }
+        }
+        //小怪
+        for (int i=0;i<count;i++) {
+            int idx = rand.nextInt(lvPropertys.size());
+            LvProperty p = lvPropertys.get(idx);
+            int lv=p.getLv()-3+rand.nextInt(7);
+            Monster monster=new Monster();
+            monster.setLv(lv);
+            monster.setId(p.getId());
+            monster.setName(p.getName());
+            monster.setRank(p.getRank());
+            double xs=(float)lv/p.getLv();
+            monster.setHp((int) (p.getHp()*xs));
+            monster.setMp((int) (p.getMp()*xs));
+            monster.setGj((int) (p.getGj()*xs));
+            monster.setFy((int) (p.getFy()*xs));
+            monster.setSd((int) (p.getSd()*xs));
+            monster.setHx((int) (p.getHx()*xs));
+            monster.setSkills(getSkillsByType(p.getSkills()));
+            monsters.add(monster);
+            exp+=p.getExp()*xs;
+            hs+=Integer.parseInt(p.getAward())*xs;
+
+            String[] dgs = p.getDropGoods().split(",");
+            for (String dg:dgs) {
+                String[] g = dg.split("_");
+                //概率 10000/
+                int gl = Integer.parseInt(g[1]);
+                if(rand.nextInt(10000)<gl){
+                    Integer c = gs.get(Integer.valueOf(g[0]));
+                    if (null!=c){
+                        gs.put(Integer.valueOf(g[0]),c+1);
+                    }else {
+                        gs.put(Integer.valueOf(g[0]),1);
+                    }
+                }
+
+            }
+
+
+            idx = rand.nextInt(goods.size());
+            LvGoods g = goods.get(idx);
+            if ("1".equals(g.getType())){
+                Integer c = gs.get(g.getId());
+                if (null!=c){
+                    gs.put(g.getId(),c+1);
+                }else {
+                    gs.put(g.getId(),1);
+                }
+            }else {
+                if(rand.nextInt(5)==0){
+                    gs.put(g.getId(),1);
+                }
+            }
+        }
+        StringBuffer goodsL=new StringBuffer();
+        for (Map.Entry<Integer, Integer> entry : gs.entrySet()) {
+            goodsL.append(String.valueOf(entry.getKey())+"_"+String.valueOf(entry.getValue())+",");
+
+        }
+
+        LvAward la=new LvAward();
+        String laid = UUID.randomUUID().toString().replace("-", "");
+        la.setId(laid);
+        la.setExp(exp);
+        la.setAward(hs+"");
+        la.setGoods(goodsL.toString());
+        la.setOpenId(lvAward.getOpenId());
+        lvAwardMapper.insert(la);
+        //减少精神力
+        JSONObject result=new JSONObject();
+        result.put("monsters",monsters);
+        result.put("award",laid);
         return result;
     }
 

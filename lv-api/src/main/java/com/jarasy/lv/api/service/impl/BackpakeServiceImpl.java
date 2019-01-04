@@ -134,6 +134,8 @@ public class BackpakeServiceImpl implements BackpakeService {
         String parameter = lvGoods.getParameter();
         if ("1".equals(parameter.split("_")[0])){
             lvBackpakeMapper.deleteByPrimaryKey(id);
+        }else if ("1".equals(parameter.split("_")[0])){
+            lvBackpakeMapper.deleteByPrimaryKey(id);
         }
     }
 

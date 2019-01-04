@@ -25,4 +25,7 @@ public interface FightingService {
 
     JSONObject getAwards(String id) throws Exception;
 
+    JSONObject  getFToken(String openId,Integer mapId) throws Exception;
+
+    JSONObject getBoss(String fToken) throws Exception;
 }

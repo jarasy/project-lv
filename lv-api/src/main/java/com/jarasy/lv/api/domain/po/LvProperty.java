@@ -31,6 +31,8 @@ public class LvProperty {
 
     private Integer position;
 
+    private String dropGoods;
+
     public Integer getId() {
         return id;
     }
@@ -149,5 +151,13 @@ public class LvProperty {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public String getDropGoods() {
+        return dropGoods;
+    }
+
+    public void setDropGoods(String dropGoods) {
+        this.dropGoods = dropGoods == null ? null : dropGoods.trim();
     }
 }
