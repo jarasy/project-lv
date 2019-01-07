@@ -45,7 +45,7 @@ public class LvRoleServiceImpl implements LvRoleService {
     public void insert(JSONObject jSONObject) {
         LvRole lvRole = new LvRole();
         LvRes lvRes=new LvRes();
-        String openid = jSONObject.getString("openid");
+        String openid = jSONObject.getString("openId");
         lvRole.setOpenid(openid);
         lvRole.setName(jSONObject.getString("name"));
         lvRole.setGender(jSONObject.getInteger("gender"));
@@ -72,7 +72,7 @@ public class LvRoleServiceImpl implements LvRoleService {
                 // 更新缓存
                 redisService.hsetForObject(HashKeyPrefix.ROLE_INFO + openid, lvRole, TimeUnit.DAYS.toSeconds(30));
             } else {
-                throw new DataErrorException("lvRole openid 异常 " + openid);
+                //throw new DataErrorException("lvRole openid 异常 " + openid);
             }
             return lvRole;
         }

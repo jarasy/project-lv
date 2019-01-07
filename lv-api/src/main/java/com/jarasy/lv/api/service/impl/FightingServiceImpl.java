@@ -85,20 +85,22 @@ public class FightingServiceImpl implements FightingService {
             exp+=p.getExp()*xs;
             hs+=Integer.parseInt(p.getAward())*xs;
 
-            String[] dgs = p.getDropGoods().split(",");
-            for (String dg:dgs) {
-                String[] g = dg.split("_");
-                //概率 10000/
-                int gl = Integer.parseInt(g[1]);
-                if(rand.nextInt(10000)<gl){
-                    Integer c = gs.get(Integer.valueOf(g[0]));
-                    if (null!=c){
-                        gs.put(Integer.valueOf(g[0]),c+1);
-                    }else {
-                        gs.put(Integer.valueOf(g[0]),1);
+            if(!StringUtils.isEmpty(p.getDropGoods())){
+                String[] dgs = p.getDropGoods().split(",");
+                for (String dg:dgs) {
+                    String[] g = dg.split("_");
+                    //概率 10000/
+                    int gl = Integer.parseInt(g[1]);
+                    if(rand.nextInt(10000)<gl){
+                        Integer c = gs.get(Integer.valueOf(g[0]));
+                        if (null!=c){
+                            gs.put(Integer.valueOf(g[0]),c+1);
+                        }else {
+                            gs.put(Integer.valueOf(g[0]),1);
+                        }
                     }
-                }
 
+                }
             }
 
 
@@ -170,17 +172,31 @@ public class FightingServiceImpl implements FightingService {
                 jg.put("count",g[1]);
                 list.add(jg);
                 LvBackpake lb = lvBackpakeMapper.selectByRoleIdAndGoodsId(lvRole.getId(), id);
-                if(null!=lb){
+                if(null!=lb&&!lb.getType().equals("2")){
                     lb.setCount(lb.getCount()+Integer.valueOf(g[1]));
                     lvBackpakeMapper.updateByPrimaryKeySelective(lb);
                 }else {
-                    LvBackpake lv=new LvBackpake();
-                    lv.setRoleId(lvRole.getId());
-                    lv.setGoodsId(lvGoods.getId());
-                    lv.setType(lvGoods.getType());
-                    lv.setEquipped(0);
-                    lv.setCount(Integer.valueOf(g[1]));
-                    lvBackpakeMapper.insert(lv);
+                    if(lb.getType().equals("2")){
+                        Integer c = Integer.valueOf(g[1]);
+                        for (int i = 0; i <c ; i++) {
+                            LvBackpake lv=new LvBackpake();
+                            lv.setRoleId(lvRole.getId());
+                            lv.setGoodsId(lvGoods.getId());
+                            lv.setType(lvGoods.getType());
+                            lv.setEquipped(0);
+                            lv.setCount(1);
+                            lvBackpakeMapper.insert(lv);
+                        }
+                    }else{
+                        LvBackpake lv=new LvBackpake();
+                        lv.setRoleId(lvRole.getId());
+                        lv.setGoodsId(lvGoods.getId());
+                        lv.setType(lvGoods.getType());
+                        lv.setEquipped(0);
+                        lv.setCount(Integer.valueOf(g[1]));
+                        lvBackpakeMapper.insert(lv);
+                    }
+
                 }
             }
         }
@@ -261,20 +277,22 @@ public class FightingServiceImpl implements FightingService {
             exp += p.getExp() * xs;
             hs += Integer.parseInt(p.getAward()) * xs;
 
-            String[] dgs = p.getDropGoods().split(",");
-            for (String dg : dgs) {
-                String[] g = dg.split("_");
-                //概率 10000/
-                int gl = Integer.parseInt(g[1]);
-                if (rand.nextInt(10000) < gl) {
-                    Integer c = gs.get(Integer.valueOf(g[0]));
-                    if (null != c) {
-                        gs.put(Integer.valueOf(g[0]), c + 1);
-                    } else {
-                        gs.put(Integer.valueOf(g[0]), 1);
+            if(!StringUtils.isEmpty(p.getDropGoods())) {
+                String[] dgs = p.getDropGoods().split(",");
+                for (String dg : dgs) {
+                    String[] g = dg.split("_");
+                    //概率 10000/
+                    int gl = Integer.parseInt(g[1]);
+                    if (rand.nextInt(10000) < gl) {
+                        Integer c = gs.get(Integer.valueOf(g[0]));
+                        if (null != c) {
+                            gs.put(Integer.valueOf(g[0]), c + 1);
+                        } else {
+                            gs.put(Integer.valueOf(g[0]), 1);
+                        }
                     }
-                }
 
+                }
             }
         }
         //小怪
@@ -298,21 +316,22 @@ public class FightingServiceImpl implements FightingService {
             monsters.add(monster);
             exp+=p.getExp()*xs;
             hs+=Integer.parseInt(p.getAward())*xs;
-
-            String[] dgs = p.getDropGoods().split(",");
-            for (String dg:dgs) {
-                String[] g = dg.split("_");
-                //概率 10000/
-                int gl = Integer.parseInt(g[1]);
-                if(rand.nextInt(10000)<gl){
-                    Integer c = gs.get(Integer.valueOf(g[0]));
-                    if (null!=c){
-                        gs.put(Integer.valueOf(g[0]),c+1);
-                    }else {
-                        gs.put(Integer.valueOf(g[0]),1);
+            if(!StringUtils.isEmpty(p.getDropGoods())) {
+                String[] dgs = p.getDropGoods().split(",");
+                for (String dg : dgs) {
+                    String[] g = dg.split("_");
+                    //概率 10000/
+                    int gl = Integer.parseInt(g[1]);
+                    if (rand.nextInt(10000) < gl) {
+                        Integer c = gs.get(Integer.valueOf(g[0]));
+                        if (null != c) {
+                            gs.put(Integer.valueOf(g[0]), c + 1);
+                        } else {
+                            gs.put(Integer.valueOf(g[0]), 1);
+                        }
                     }
-                }
 
+                }
             }
 
 

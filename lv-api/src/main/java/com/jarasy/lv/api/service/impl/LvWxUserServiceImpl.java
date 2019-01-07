@@ -49,7 +49,7 @@ public class LvWxUserServiceImpl implements LvWxUserService {
                 // 更新缓存
                 redisService.hsetForObject(HashKeyPrefix.WXUSER_INFO + openid, lvWxUser, TimeUnit.DAYS.toSeconds(30));
             } else {
-                throw new DataErrorException("LvWxUser openid 异常 " + openid);
+                //throw new DataErrorException("LvWxUser openid 异常 " + openid);
             }
             return lvWxUser;
         }

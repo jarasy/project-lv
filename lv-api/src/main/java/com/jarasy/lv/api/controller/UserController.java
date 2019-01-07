@@ -11,6 +11,7 @@ import com.jarasy.lv.api.service.LvWxUserService;
 import com.jarasy.lv.common.http.DataResult;
 import com.jarasy.lv.common.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,8 @@ public class UserController extends BaseController {
     private LvWxUserService lvWxUserService;
     @Autowired
     private LvRoleService lvRoleService;
+    @Value("${picture.upload.path}")
+    private String PICTURE_UPLOAD_PATH;
 
 
     /**
@@ -62,6 +65,7 @@ public class UserController extends BaseController {
         try{
             LvWxUser lvWxUser = lvWxUserService.selectByOpenid(jsonObject.getString("openid"));
             if(null==lvWxUser){
+                ImageUtil.saveImageByURL(jsonObject.getString("avatarUrl"),jsonObject.getString("openid")+".png",PICTURE_UPLOAD_PATH);
                 lvWxUserService.insert(jsonObject);
             }
         }catch(Exception e){
