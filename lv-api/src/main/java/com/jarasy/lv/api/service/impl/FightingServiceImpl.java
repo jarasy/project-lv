@@ -381,11 +381,17 @@ public class FightingServiceImpl implements FightingService {
         Property player = setPlayerProperty(lvRole);
         player.setType(1);
         //friendship
-        Property fs = setPlayerProperty(friendship);
-        fs.setType(2);
+        Property fs =null;
+        if(null!=friendship) {
+            fs=setPlayerProperty(friendship);
+            fs.setType(2);
+        }
         //pet
-        Property pet = setPetProperty(lvPet);
-        pet.setType(3);
+        Property pet =null;
+        if(null!=pet) {
+            pet = setPetProperty(lvPet);
+            pet.setType(3);
+        }
 
         List<Property> result=new ArrayList<>();
         if(null!=player){
@@ -466,7 +472,7 @@ public class FightingServiceImpl implements FightingService {
                 // 更新缓存
                 redisService.hsetForObject(HashKeyPrefix.PET_INFO + roleId, lvPet, TimeUnit.DAYS.toSeconds(60));
             } else {
-                throw new DataErrorException("LvMap id 异常 " + roleId);
+                ///throw new DataErrorException("lvPet roleId 异常 " + roleId);
             }
             return lvPet;
         }
